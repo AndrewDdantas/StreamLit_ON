@@ -283,7 +283,7 @@ ax[0].legend([f'Média {avg}',f'Total {smm}'],loc ="upper left")
 ax[0].set_title(f'Peças')
 
 y = max(som['CUBAGEM'])*1.2
-ax[1].bar(som['HORA'].sort_values().astype(str),som['CUBAGEM'])
+ax[1].bar(som['HORA'].astype(int).sort_values().astype(str),som['CUBAGEM'])
 ax[1].set_ylim(0,y)
 ax[1].grid(False)
 avg = fmt_num(som['CUBAGEM'].mean(), 'NORMAL',1)
