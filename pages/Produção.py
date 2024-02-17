@@ -8,7 +8,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 st.set_page_config(
-    page_title="Meu App Streamlit",
+    page_title="Produção",
     page_icon=":chart_with_upwards_trend:",
     layout="wide",  # Pode ser "wide" ou "centered"
     initial_sidebar_state="auto",  # Pode ser "auto", "expanded", ou "collapsed"
@@ -268,7 +268,7 @@ col1, col2 = st.columns(2)
 col1.pyplot(fig)
 
 fig, ax = plt.subplots(2, 1, figsize=(2+len(som['QT_SEPARADO'])*0.9, 10))
-ax[0].bar(som['HORA'].sort_values().astype(str),som['QT_SEPARADO'])
+ax[0].bar(som['HORA'].astype(int).sort_values().astype(str),som['QT_SEPARADO'])
 ax[0].grid(False)
 y = max(som['QT_SEPARADO'])*1.2
 ax[0].set_ylim(0,y)
