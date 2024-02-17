@@ -268,7 +268,7 @@ col1, col2 = st.columns(2)
 col1.pyplot(fig)
 
 fig, ax = plt.subplots(2, 1, figsize=(2+len(som['QT_SEPARADO'])*0.9, 10))
-ax[0].bar(som['HORA'].astype(str),som['QT_SEPARADO'])
+ax[0].bar(som['HORA'].sort_values().astype(str),som['QT_SEPARADO'])
 ax[0].grid(False)
 y = max(som['QT_SEPARADO'])*1.2
 ax[0].set_ylim(0,y)
@@ -283,7 +283,7 @@ ax[0].legend([f'Média {avg}',f'Total {smm}'],loc ="upper left")
 ax[0].set_title(f'Peças')
 
 y = max(som['CUBAGEM'])*1.2
-ax[1].bar(som['HORA'].astype(str),som['CUBAGEM'])
+ax[1].bar(som['HORA'].sort_values().astype(str),som['CUBAGEM'])
 ax[1].set_ylim(0,y)
 ax[1].grid(False)
 avg = fmt_num(som['CUBAGEM'].mean(), 'NORMAL',1)
