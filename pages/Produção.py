@@ -23,7 +23,6 @@ st.markdown(f'<style>{css_string}</style>', unsafe_allow_html=True)
 # funções 
 
 def fmt_num(valor, tipo, casas=0): # Função para formatar números.
-    lo.setlocale(lo.LC_ALL, 'pt_BR.UTF-8')
     if tipo == 'REAL':
         return lo.format_string(f"R$ %0.{casas}f",valor,grouping=True)
     if tipo == 'CUBAGEM':

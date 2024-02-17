@@ -4,7 +4,6 @@ import locale as lo
 from datetime import datetime, timedelta
 import gspread as gs
 from oauth2client.service_account import ServiceAccountCredentials
-lo.setlocale(lo.LC_ALL, 'pt_BR.UTF-8')
 
 scope = ['https://spreadsheets.google.com/feeds', # Definição de link para conexão com API.
         'https://www.googleapis.com/auth/drive'] 
@@ -16,7 +15,6 @@ BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7ox
 
 
 def fmt_num(valor, tipo, casas=0): # Função para formatar números.
-    lo.setlocale(lo.LC_ALL, 'pt_BR.UTF-8')
     if isinstance(valor,str):
         return ''
     if tipo == 'REAL':
