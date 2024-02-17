@@ -140,7 +140,7 @@ h2 {
 .termometro {
   width: 90%;
   height: 150px;
-  background-image: linear-gradient(to right, red, yellow, green);
+  background-image: green;
   border-right: #333;
   border-width: 5px;
   border-radius: 20px;
