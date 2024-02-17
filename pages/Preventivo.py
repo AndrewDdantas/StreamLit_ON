@@ -37,17 +37,16 @@ df['Total'] = df.apply(lambda x: 1 if (x['FINALIZADOR'] == 'PENDENTE') else 0, a
 d2 = df.loc[(df['REGIONAL']!='CORREIOS') & (df['REGIONAL']!='FRACIONADO')] 
 df = df.loc[(df['REGIONAL']!='CORREIOS') & (df['REGIONAL']!='FRACIONADO') & (df['FINALIZADOR'] == 'PENDENTE')]
 def var(x):
-    match x:
-        case 'Endere o do Cliente Destino n o Localizado':
-            return 'Endereço Não_Localizado'
-        case 'Em rota de entrega':
-            return 'Em Entrega'
-        case '1a Tentativa Cliente Ausente':
-            return '1a_Tentativa Cliente_Ausente'
-        case 'Saiu para Entrega':
-            return 'Saiu_para Entrega'
-        case 'Troca de transportadora':
-            return 'Troca transportadora'
+    if x == 'Endere o do Cliente Destino n o Localizado': 
+        return 'Endereço Não_Localizado'
+    elif x == 'Em rota de entrega':
+        return 'Em Entrega'
+    elif x == '1a Tentativa Cliente Ausente':
+        return '1a_Tentativa Cliente_Ausente'
+    elif x == 'Saiu para Entrega':
+        return 'Saiu_para Entrega'
+    elif x == 'Troca de transportadora':
+        return 'Troca transportadora'
 
 df['STATUS FINAL'] = df['STATUS FINAL'].apply(var)
 df.sort_values('STATUS FINAL', ascending=False)
