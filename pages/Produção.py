@@ -136,7 +136,7 @@ for i in pendente:
         </div>
         <div class="cont">
             <div class="termometro">
-                <div class="mercurio" style="background-color: rgb(192, 191, 191) {pec_men}, transparent {pec_percen});"></div>
+                <div class="mercurio" style="background-color: #bcbaba {pec_men}, transparent {pec_percen});"></div>
                 </div>
             </div>
         </div>
