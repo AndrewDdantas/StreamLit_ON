@@ -50,6 +50,7 @@ if 'carteira' not in st.session_state and 'estoque' not in st.session_state and 
     df = df.sort_values('NUMPEDVEN')
     deparamodais = pd.read_excel('de_para_modais.xlsx','Modais')
     deparafiliais = pd.read_excel('de_para_modais.xlsx','Filiais')
+    deparafiliais['Cód'] = deparafiliais['Cód'].astype(str)
     dp_cdEntrega = pd.read_excel('de_para_modais.xlsx','CD Entrega')
     df_union = pd.merge(df,deparamodais,how='left', on='CODMODAL')
     df_union = pd.merge(df_union,deparafiliais, how='left',left_on='CODFILTRANSFFAT', right_on='Cód')
