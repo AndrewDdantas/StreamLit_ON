@@ -58,7 +58,10 @@ din = din[din.sum().sort_values(ascending=False).index]
 din = din.iloc[:, :5]
 data = pd.DataFrame(din)
 data = data.head(16)
-data = data.reset_index().sort_values('Em Entrega', ascending=False)
+try:
+    data = data.reset_index().sort_values('Em Entrega', ascending=False)
+except:
+    data = data.reset_index()
 trans = df.groupby('TRANSP CORRIGIDA').agg({'A Vencer': 'sum', 'Vence Hoje': 'sum', 'Vencido': 'sum', 'Total': 'sum'}).reset_index()
 total = trans['Total'].sum()
 a_vence = trans['A Vencer'].sum()
