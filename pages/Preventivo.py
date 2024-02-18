@@ -2,6 +2,9 @@ import gspread as gs
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
+import matplotlib.patches as patches
 
 st.set_page_config(
     page_title="Meu App Streamlit",
@@ -69,83 +72,121 @@ vence = trans['Vence Hoje'].sum()
 venci = trans['Vencido'].sum()
 trans = trans.sort_values(['Vence Hoje', 'Vencido'], ascending=False).head(26) # Grid para encaixe de Dashboard.
 
+fig = plt.figure(layout="constrained", figsize=(30, 12))
 
-# Ler o arquivo CSS e converter em string
-with open('style.css', 'r') as f:
-    css_string = f.read()
+gs = GridSpec(3, 6, figure=fig)
+ax1 = fig.add_subplot(gs[:1, :3])
+ax2 = fig.add_subplot(gs[0:3, 3:-1])
+ax3 = fig.add_subplot(gs[1:3, :-3])
+ax4 = fig.add_subplot(gs[0:3, 5:])
 
-# Injetar o CSS no Streamlit
-st.markdown(f'<style>{css_string}</style>', unsafe_allow_html=True)
+rectangle1 = patches.Rectangle((0.15, 0.2), 0.3, 0.3, linewidth=1, edgecolor='none', facecolor='#ED7D31')
+rectangle2 = patches.Rectangle((0.15, 0.6), 0.3, 0.3, linewidth=1, edgecolor='none', facecolor='#00B0F0')
+rectangle3 = patches.Rectangle((0.55, 0.2), 0.3, 0.3, linewidth=1, edgecolor='none', facecolor='red')
+rectangle4 = patches.Rectangle((0.55, 0.6), 0.3, 0.3, linewidth=1, edgecolor='none', facecolor='green')
 
-html_content = f'''
-<div class="box_large">
-    <div class="info-box1">
-        <h2>Total de Pedidos</h2>
-        <p>{total}</p>
-    </div>
-    <div class="info-box2">
-        <h2>A Vencer</h2>
-        <p>{a_vence}</p>
-    </div>
-</div>
-<div class="box_large">
-    <div class="info-box3">
-        <h2>Vence Hoje</h2>
-        <p>{vence}</p>
-    </div>
-    <div class="info-box4">
-        <h2>Vencidos</h2>
-        <p>{venci}</p>
-    </div>
-</div>
-'''
+ax1.add_patch(rectangle1)
+ax1.add_patch(rectangle2)
+ax1.add_patch(rectangle3)
+ax1.add_patch(rectangle4)
 
-html_table = trans.to_html(classes='info-table', index=False) # Tabela transportadoras2
+rectangle1 = patches.Rectangle((0, 0.81), 1, 0.17, linewidth=1, edgecolor='none', facecolor='#00B0F0')
+rectangle2 = patches.Rectangle((0, 0.61), 1, 0.17, linewidth=1, edgecolor='none', facecolor='#00B0F0')
+rectangle3 = patches.Rectangle((0, 0.41), 1, 0.17, linewidth=1, edgecolor='none', facecolor='#00B0F0')
+rectangle4 = patches.Rectangle((0, 0.21), 1, 0.17, linewidth=1, edgecolor='none', facecolor='#00B0F0')
+rectangle5 = patches.Rectangle((0, 0.01), 1, 0.17, linewidth=1, edgecolor='none', facecolor='#00B0F0')
 
-data.columns.name = None
+ax4.add_patch(rectangle1)
+ax4.add_patch(rectangle2)
+ax4.add_patch(rectangle3)
+ax4.add_patch(rectangle4)
+ax4.add_patch(rectangle5)
 
-html_table2 = data.to_html(classes="Table2", index=False)
+ax1.text(0.3, 0.75, f'Total Pedidos\n{total}', ha='center', va='center', fontsize=25, color='white', weight='bold')
+ax1.text(0.3, 0.35, f'Vence Hoje\n{vence}', ha='center', va='center', fontsize=25, color='white', weight='bold')
+ax1.text(0.7, 0.75, f'A Vencer\n{a_vence}', ha='center', va='center', fontsize=25, color='white', weight='bold')
+ax1.text(0.7, 0.35, f'Vencidos\n{venci}', ha='center', va='center', fontsize=25, color='white', weight='bold')
 
+ax4.text(0.5, 0.89, f'Total Pedidos\n{df2[0][0]}', ha='center', va='center', fontsize=40, color='white', weight='bold')
+ax4.text(0.5, 0.69, f'Pendentes\n{df2[1][0]}', ha='center', va='center', fontsize=40, color='white', weight='bold')
+ax4.text(0.5, 0.49, f'%NS\n{df2[2][0]}', ha='center', va='center', fontsize=40, color='white', weight='bold')
+ax4.text(0.5, 0.29, f'Saldo Meta (%)\n{df2[3][0]}', ha='center', va='center', fontsize=30, color='white', weight='bold')
+ax4.text(0.5, 0.09, f'Saldo de Pendentes\npara meta(Pedidos)\n{df2[4][0]}', ha='center', va='center', fontsize=30, color='white', weight='bold')
 
+ax1.axis('off')
+ax2.axis('off')
+ax3.axis('off')
+ax4.axis('off')
 
+tabela1 = ax2.table(cellText=trans.values, colLabels=trans.columns, loc='upper left')
+tabela1.auto_set_font_size(False)
+tabela1.set_fontsize(15)
+tabela1.scale(1, 2)
 
+for (i,j), cell in tabela1._cells.items():
+    cell.get_text().set_ha('center')
+    if i == 0:
+        if j == 1:
+            cell.set_fontsize(17)
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor('green')
+            cell.get_text().set_ha('center')
+        elif j == 2:
+            cell.set_fontsize(17)
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor('#ED7D31')
+            cell.get_text().set_ha('center')
+        elif j == 3:
+            cell.set_fontsize(17)
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor('red')
+            cell.get_text().set_ha('center')
+        else :
+            cell.set_fontsize(17)
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor('#00B0F0')
+            cell.get_text().set_ha('center')
 
-col1, col2, col3 = st.columns([3, 2, 1])
-col1.markdown(html_content, unsafe_allow_html=True)
-col1.markdown(html_table2, unsafe_allow_html=True)
-col2.markdown(html_table, unsafe_allow_html=True)
-
-total_pedidos = df2[0][0]
-pendentes = df2[1][0]
-ns = df2[2][0]
-saldo = df2[3][0]
-saldo_pendentes = df2[4][0]
-
-
-html_content2 = f'''<div class="box_large_calc">
-<div class="box">
-    <h2>Total de Pedidos</h2>
-    <p>{total_pedidos}</p>
-</div>
-<div class="box">
-    <h2>Pendentes</h2>
-    <p>{pendentes}</p>
-</div>
-<div class="box">
-    <h2>% NS</h2>
-    <p>{ns}</p>
-</div>
-<div class="box">
-    <h2>Saldo</h2>
-    <p>{saldo}</p>
-</div>
-<div class="box">
-    <h2>Saldo pendente para Meta</h2>
-    <p>{saldo_pendentes}</p>
-</div>
-</div>
-
-'''
+    else:
+        cell.set_text_props(weight='bold', color='black')
 
 
-col3.markdown(html_content2, unsafe_allow_html=True)
+for i in range(len(trans)+1):
+    for o in range(len(trans.columns)):
+        if o > 0:
+            cell = tabela1[(i, o)]
+            cell.set_width(0.17)
+        else:
+            cell = tabela1[(i, 0)]
+            cell.set_width(0.3)
+
+
+
+tabela2 = ax3.table(cellText=data.values, colLabels=data.columns, loc='upper left')
+tabela2.auto_set_font_size(False)
+tabela2.set_fontsize(15)
+tabela2.scale(1, 2)
+
+
+for key, cell in tabela2.get_celld().items():
+    if key[0] == 0:
+        cell.get_text().set_text('\n'.join(cell.get_text().get_text().split()))
+
+for (i,j), cell in tabela2._cells.items():
+    cell.get_text().set_ha('center')
+    if i == 0:
+        cell.set_fontsize(17)
+        cell.set_text_props(weight='bold', color='w')
+        cell.set_facecolor('#00B0F0')
+        cell.get_text().set_ha('center')
+    else:
+        cell.set_text_props(weight='bold', color='black')
+
+for o in range(min(len(data), len(data.columns))):
+    cell = tabela2[(0, o)]
+    cell.set_height(0.1)
+
+
+fig.suptitle("Preventivo Entregas", fontsize=40)
+
+st.pyplot(fig)
