@@ -7,6 +7,52 @@ from datetime import datetime, timedelta
 import streamlit as st
 import matplotlib.pyplot as plt
 
+def term(ax, atual, alvo, data):
+
+    if atual / alvo <= 0.2:
+        cor_termometro_cheio = 'red'
+    elif atual / alvo <= 0.7:
+        cor_termometro_cheio = 'yellow'
+    else:
+        cor_termometro_cheio = 'green'
+
+    # Adicionando barras do termômetro
+    ax.barh(0.5, (atual / alvo) * 100, 1, color=cor_termometro_cheio, edgecolor='black')
+    ax.barh(0.5, (100 - (atual / alvo) * 100), 1, left=(atual / alvo) * 100, color='lightgray', edgecolor='black')
+
+    # Ajustando os limites dos eixos
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 1)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    faltando = alvo - atual
+    faltando = fmt_num(faltando, 'NORMAL', 1)
+    alvo = fmt_num(alvo, 'NORMAL', 1)
+    atual = fmt_num(atual, 'NORMAL', 1)
+    # Adicionando texto
+    ax.text(50, 1.2, f'Programado: {alvo}      Separado: {atual}       Faltando: {faltando}',
+            ha='center', va='center', fontsize=20)
+    ax.text(50, 1.2+0.25, f'{data}',
+            ha='center', va='center', fontsize=30)
+
+def table(ax, dados):
+    ax.axis('off')
+    tabela = ax.table(cellText=dados.values, colLabels=dados.columns, loc='upper left')
+    tabela.auto_set_font_size(False)
+    tabela.set_fontsize(14)
+    tabela.scale(1, 2)
+    ax.set_ylim(-10000, 100000)
+
+    for (i,j), cell in tabela._cells.items():
+        cell.get_text().set_ha('center')
+        if i == 0:
+            cell.set_fontsize(14)
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor('#00B0F0')
+            cell.get_text().set_ha('center')
+        else:
+            cell.set_text_props(weight='bold', color='black')
+
 st.set_page_config(
     page_title="Produção",
     page_icon=":chart_with_upwards_trend:",
@@ -86,96 +132,48 @@ hr['OFERECIMENTO'] = pd.to_datetime(hr['OFERECIMENTO'], format='%d/%m/%Y %H:%M')
 hr = hr.sort_values('OFERECIMENTO')
 hr['OFERECIMENTO'] = hr['OFERECIMENTO'].dt.time
 hr['DTPROGRAMACAO'] = hr['DTPROGRAMACAO'].dt.strftime('%d/%m/%Y')
-pendente = pendente.strftime('%d/%m/%Y')
+data_dist = pendente.strftime('%d/%m/%Y')
 
 
-st.session_state['pendentes'] = pendente
-pecas_html = ''
-cub_html = ''
-o = 0
-for i in pendente:
+v = 5*len(data_dist)
+fig = plt.figure(figsize=(27, 10+v))
+
+
+i = 1
+c = 0
+r = 1
+t = 3
+while i <= len(data_dist):
     
-    df = hr[hr['DTPROGRAMACAO'] == i]
-    pec_percen = fmt_num(df['SEPARADO'].sum() / df['PROGRAMACAO'].sum(), "PORCENTAGEM")
-    pec_men = fmt_num( (1 - df['SEPARADO'].sum() / df['PROGRAMACAO'].sum()) , "PORCENTAGEM")
-    pec_separado = df['SEPARADO'].sum()
-    pec_programa = df['PROGRAMACAO'].sum()
-    pec_pendente = df['PROGRAMACAO'].sum() - df['SEPARADO'].sum()
-    pecas = df[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']]
-    pecas[['PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']] = pecas[['PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']].map(fmt_num, tipo='NORMAL')
-    pec_html = pecas.to_html(classes="pec_con", index=False)
+    gs1 = GridSpec(3*len(data_dist), 4, wspace=1, hspace=1)
+    ax1 = fig.add_subplot(gs1[c:r, :2])
+    ax2 = fig.add_subplot(gs1[r:t, :2])
+    ax3 = fig.add_subplot(gs1[c:r, 2:4])
+    ax4 = fig.add_subplot(gs1[r:t, 2:4])
+    te = hr.loc[hr['DTPROGRAMACAO'] == data_dist[i-1]]
+    term(ax1, te['SEPARADO'].sum(), te['PROGRAMACAO'].sum(), data_dist[i-1])
+    term(ax3, te['CUB_SEPARADA'].sum(), te['CUB_PROGRAMADA'].sum(), data_dist[i-1])
 
+    
+    pecas = te[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']]
+    pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
+    pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
+    pecas.loc[:, 'PEN_PEÇAS'] = pecas['PEN_PEÇAS'].apply(fmt_num, tipo='NORMAL')
 
-    cub_percen = fmt_num(df['CUB_SEPARADA'].sum() / df['CUB_PROGRAMADA'].sum(), "PORCENTAGEM")
-    cub_men = fmt_num((1 - df['CUB_SEPARADA'].sum() / df['CUB_PROGRAMADA'].sum()), "PORCENTAGEM")
-    cub_separado = fmt_num(df['CUB_SEPARADA'].sum(), 'CUBAGEM')
-    cub_programa = fmt_num(df['CUB_PROGRAMADA'].sum(), 'CUBAGEM')
-    cub_pendente = fmt_num(df['CUB_PROGRAMADA'].sum() - df['CUB_SEPARADA'].sum(), 'CUBAGEM')
-    cubagem = df[['CUB_PROGRAMADA', 'CUB_SEPARADA', 'PEN_CUB']]
-    cubagem = cubagem.map(fmt_num, tipo="CUBAGEM", casas=2)
-    cubagem_html = cubagem.to_html(classes="cub_con", index=False)
+    cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA', 'PEN_CUB']]
+    cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
+    cubagem.loc[:, 'CUB_SEPARADA'] = cubagem['CUB_SEPARADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
+    cubagem.loc[:, 'PEN_CUB'] = cubagem['PEN_CUB'].apply(fmt_num, tipo='CUBAGEM', casas=2)
 
-    pecas_html += f"""
-        <div class="tex">
-        <h2>Peças</h2>
-        <h2>{i}</h2>
-        </div>
-        <div class="Cab">
-            <div class="itens">
-                <h2>Programado</h2>
-                <p>{fmt_num(pec_programa, 'NORMAL')}</p>
-            </div>
-            <div class="itens">
-                <h2>Separado</h2>
-                <p>{fmt_num(pec_separado, 'NORMAL')}</p>
-            </div>
-            <div class="itens">
-                <h2>Pendente</h2>
-                <p>{fmt_num(pec_pendente, 'NORMAL')}</p>
-            </div>
-        </div>
-        <div class="cont">
-            <div class="termometro">
-                <div class="mercurio" style="background: linear-gradient(to left, rgb(192, 191, 191) {pec_men}, transparent {pec_percen});"></div>
-                </div>
-            </div>
-        </div>
-        """
-    pecas_html += pec_html
-
-    cub_html += f"""
-        <div class="tex">
-        <h2>Cubagem</h2>
-        <h2>{i}</h2>
-        </div>
-        <div class="Cab">
-            <div class="itens">
-                <h2>Programado</h2>
-                <p>{cub_programa}</p>
-            </div>
-            <div class="itens">
-                <h2>Separado</h2>
-                <p>{cub_separado}</p>
-            </div>
-            <div class="itens">
-                <h2>Pendente</h2>
-                <p>{cub_pendente}</p>
-            </div>
-        </div>
-        <div class="cont">
-            <div class="termometro">
-                <div class="mercurio" style="background: linear-gradient(to left, rgb(192, 191, 191) {cub_men}, transparent {cub_percen});"></div>
-                </div>
-            </div>
-        </div>
-        """
-    cub_html += cubagem_html
-col1, col2 = st.columns(2)
-
-col1.markdown(pecas_html, unsafe_allow_html=True)
-
-col2.markdown(cub_html, unsafe_allow_html=True)
-
+    table(ax2, pecas)
+    table(ax4, cubagem)
+    
+    i += 1
+    c = c+3
+    r = r+3
+    t = t+3
+st.text('Status Produção CD 2650')
+st.pyplot(fig)
 
 # Rort produção por turno.
 base = BASE_STREAMLIT.worksheet('PRODUÇÃO_TURNO')
