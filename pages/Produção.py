@@ -6,6 +6,7 @@ import numpy as np
 from datetime import datetime, timedelta 
 import streamlit as st
 import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 def term(ax, atual, alvo, data):
 
