@@ -3,7 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import numpy as np
 import streamlit as st
-
+from datetime import datetime
 
 st.set_page_config(
     page_title="Meu App Streamlit",
@@ -35,7 +35,16 @@ base = pd.DataFrame(base)
 base.columns = ['CODENTVEIC','APRESENTACAO','ENTRADA','SAIDA','CODCOMANDA','PLACAVEIC','CPF','NOMEMOTORISTA','IDCARGA']
 carros = base
 
-carros['PERMANENCIA'] = pd.to_datetime(carros['SAIDA']) - pd.to_datetime(carros['ENTRADA'])
+def permanencia(df):
+    e = pd.to_datetime(df['ENTRADA'])
+    s = pd.to_datetime(df['SAIDA'])
+    if not s:
+        return e - datetime.now()
+    else:
+        return s - e
+
+
+carros['PERMANENCIA'] = carros.apply(permanencia, axis=1)
 carros['PERMANENCIA'] = pd.to_timedelta(carros['PERMANENCIA'], unit='ms')
 carros = carros.fillna(0)
 
