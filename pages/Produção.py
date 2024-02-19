@@ -287,7 +287,7 @@ ax[1].set_ylim(0,y)
 ax[1].grid(False)
 avg = fmt_num(som['CUBAGEM'].mean(), 'NORMAL',1)
 avc = som['CUBAGEM'].mean()
-smm = som['CUBAGEM'].sum()
+smm = fmt_num(som['CUBAGEM'].sum(), 'NORMAL',1)
 
 for index, val in enumerate(som['CUBAGEM']):
     valu = fmt_num(val, 'CUBAGEM', 1)
