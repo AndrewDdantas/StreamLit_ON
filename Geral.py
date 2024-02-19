@@ -20,9 +20,9 @@ def fmt_num(valor, tipo, casas=0): # Função para formatar números.
     if tipo == 'REAL':
         return lo.format_string(f"R$ %0.{casas}f",valor,grouping=True)
     if tipo == 'CUBAGEM':
-        return lo.format_string(f"%0.{casas}f",valor,grouping=True)
+        return "{:,.1f}".format(valor).replace(',', 'X').replace('.', ',').replace('X', '.')
     if tipo == 'NORMAL':
-        return lo.format_string(f"%0.{casas}f",valor,grouping=True)
+        return "{:,.0f}".format(valor).replace(',', 'X').replace('.', ',').replace('X', '.')
     if tipo == "PORCENTAGEM":
         return f"{{:.{casas}%}}".format(valor).replace('.',',')
 
