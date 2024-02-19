@@ -112,7 +112,7 @@ col2.metric('Liberado',liberado)
 col3.metric('Não Chegou',nchegou)
 merge['PERMANENCIA'] = pd.to_timedelta(merge['PERMANENCIA'], unit='ms')
 merge = merge.fillna('')
-merge['PERMANENCIA'].fillna('', inplace=True)
+merge['PERMANENCIA'] = merge['PERMANENCIA'].fillna('', inplace=True)
 
 
 def colorir_linha(s):
