@@ -35,18 +35,15 @@ base = pd.DataFrame(base)
 base.columns = ['CODENTVEIC','APRESENTACAO','ENTRADA','SAIDA','CODCOMANDA','PLACAVEIC','CPF','NOMEMOTORISTA','IDCARGA']
 carros = base
 
-def permanencia(df):
-    e = pd.to_datetime(df['ENTRADA'])
-    s = pd.to_datetime(df['SAIDA'])
-    if not s:
-        return pd.to_datetime(datetime.now()) - e 
-    else:
-        return s - e
+def calcula_permanencia(row):
+    e = pd.to_datetime(row['ENTRADA'])
+    s = pd.to_datetime(row['SAIDA']) if pd.notnull(row['SAIDA']) else pd.to_datetime(datetime.now())
+    return s - e
 
 st.write(datetime.now())
 
 
-carros['PERMANENCIA'] = carros.apply(permanencia, axis=1)
+carros['PERMANENCIA'] = carros.apply(calcula_permanencia, axis=1)
 carros['PERMANENCIA'] = pd.to_timedelta(carros['PERMANENCIA'], unit='ms')
 carros = carros.fillna(0)
 
