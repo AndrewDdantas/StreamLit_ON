@@ -43,6 +43,8 @@ def permanencia(df):
     else:
         return s - e
 
+st.write(datetime.now())
+
 
 carros['PERMANENCIA'] = carros.apply(permanencia, axis=1)
 carros['PERMANENCIA'] = pd.to_timedelta(carros['PERMANENCIA'], unit='ms')
