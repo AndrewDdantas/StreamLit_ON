@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from datetime import datetime
+import pytz
 
 st.set_page_config(
     page_title="Meu App Streamlit",
@@ -39,7 +40,8 @@ def calcula_permanencia(row):
     if row['ENTRADA'] == '':
         return ''
     e = pd.to_datetime(row['ENTRADA'])
-    agora = datetime.now()
+    fuso_horario = pytz.timezone('America/Sao_Paulo')
+    agora = datetime.now(fuso_horario)
     s = pd.to_datetime(row['SAIDA']) if row['SAIDA'] != '' else pd.to_datetime(agora.strftime('%Y-%m-%d %H:%M'))
     return pd.to_timedelta(s - e , unit='ms')
 
