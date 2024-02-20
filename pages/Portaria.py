@@ -37,7 +37,8 @@ carros = base
 
 def calcula_permanencia(row):
     e = pd.to_datetime(row['ENTRADA'])
-    s = pd.to_datetime(row['SAIDA']) if pd.notnull(row['SAIDA']) else pd.to_datetime(datetime.now())
+    agora = datetime.now()
+    s = pd.to_datetime(row['SAIDA']) if pd.notnull(row['SAIDA']) else pd.to_datetime(agora.strftime('%Y-%m-%d %H-%M'))
     return s - e
 
 st.write(datetime.now())
