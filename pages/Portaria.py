@@ -39,7 +39,7 @@ def permanencia(df):
     e = pd.to_datetime(df['ENTRADA'])
     s = pd.to_datetime(df['SAIDA'])
     if not s:
-        return datetime.now() - e 
+        return pd.to_datetime(datetime.now()) - e 
     else:
         return s - e
 
