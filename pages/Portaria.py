@@ -39,10 +39,7 @@ def calcula_permanencia(row):
     e = pd.to_datetime(row['ENTRADA'])
     agora = datetime.now()
     s = pd.to_datetime(row['SAIDA']) if row['SAIDA'] != '' else pd.to_datetime(agora.strftime('%Y-%m-%d %H:%M'))
-    return s - e
-st.dataframe(carros)
-
-st.write(datetime.now())
+    return s - e if e != '' else ''
 
 
 carros['PERMANENCIA'] = carros.apply(calcula_permanencia, axis=1)
