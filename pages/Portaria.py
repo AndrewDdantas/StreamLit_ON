@@ -120,7 +120,7 @@ def colorir_linha(s):
     return [
         'background-color: green; color: white' if x == 'Liberado' else
         'background-color: red; color: white' if x == 'Não Chegou' else
-        'background-color: yellow' if x == 'No Pátio' else
+        'background-color: yellow; color: black' if x == 'No Pátio' else
         ''  # Sem cor de fundo se não atender a nenhuma condição
         for x in s
     ]
