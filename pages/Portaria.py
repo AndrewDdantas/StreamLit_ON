@@ -43,7 +43,7 @@ def permanencia(df):
     else:
         return s - e
 
-st.write(datetime.now())
+st.write(type(datetime.now())
 
 
 carros['PERMANENCIA'] = carros.apply(permanencia, axis=1)
