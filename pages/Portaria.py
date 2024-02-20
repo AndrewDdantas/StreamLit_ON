@@ -93,7 +93,7 @@ merge = merge.groupby(['DATA_PROG', 'OFEREC','IDCARGA']).agg({
 def status(df):
     if all(pd.isnull(df[col]) or df[col] == '' for col in ['ENTRADA', 'SAIDA', 'PERMANENCIA']):
         return 'Não Chegou'
-    elif (df['ENTRADA'] != '') and (df['SAIDA'] == 0):
+    elif (df['ENTRADA'] != '') and (df['SAIDA'] == ''):
         return 'No Pátio'
     else:
         return 'Liberado'
