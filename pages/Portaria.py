@@ -39,7 +39,7 @@ def permanencia(df):
     e = pd.to_datetime(df['ENTRADA'])
     s = pd.to_datetime(df['SAIDA'])
     if not s:
-        return e - datetime.now()
+        return datetime.now() - e 
     else:
         return s - e
 
@@ -120,7 +120,7 @@ def colorir_linha(s):
     return [
         'background-color: green; color: white' if x == 'Liberado' else
         'background-color: red; color: white' if x == 'Não Chegou' else
-        'background-color: yellow' if x == 'No pátio' else
+        'background-color: yellow' if x == 'No Pátio' else
         ''  # Sem cor de fundo se não atender a nenhuma condição
         for x in s
     ]
