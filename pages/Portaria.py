@@ -36,14 +36,15 @@ base.columns = ['CODENTVEIC','APRESENTACAO','ENTRADA','SAIDA','CODCOMANDA','PLAC
 carros = base
 
 def calcula_permanencia(row):
+    if row['ENTRADA'] == '':
+        return ''
     e = pd.to_datetime(row['ENTRADA'])
     agora = datetime.now()
     s = pd.to_datetime(row['SAIDA']) if row['SAIDA'] != '' else pd.to_datetime(agora.strftime('%Y-%m-%d %H:%M'))
-    return s - e if e != '' else ''
+    return pd.to_timedelta(s - e , unit='ms')
 
 
 carros['PERMANENCIA'] = carros.apply(calcula_permanencia, axis=1)
-carros['PERMANENCIA'] = pd.to_timedelta(carros['PERMANENCIA'], unit='ms')
 carros = carros.fillna(0)
 
 carros = carros[carros['IDCARGA'] != '']
