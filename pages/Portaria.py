@@ -114,7 +114,11 @@ col3.metric('Não Chegou',nchegou)
 merge['PERMANENCIA'] = pd.to_timedelta(merge['PERMANENCIA'], unit='ms')
 merge = merge.fillna('')
 merge['PERMANENCIA'] = merge['PERMANENCIA'].apply(lambda x: '' if x == pd.NaT else x)
+bo = merge
+bo['CRITICO'] = bo.apply(lamba x: 'CRÍTICO' if x['PERMANENCIA'] >= pd.Timedelta(hours=4) else 'ACEITÁVEL')
+bo = bo[bo['CRITICO'] == 'CRÍTICO']
 
+st.dataframe(bo)
 
 def colorir_linha(s):
     # Verifica cada valor em s (série) e retorna a cor de fundo correspondente
