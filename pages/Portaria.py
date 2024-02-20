@@ -115,7 +115,16 @@ merge['PERMANENCIA'] = pd.to_timedelta(merge['PERMANENCIA'], unit='ms')
 merge = merge.fillna('')
 merge['PERMANENCIA'] = merge['PERMANENCIA'].apply(lambda x: '' if x == pd.NaT else x)
 bo = merge
-bo['STT'] = bo['PERMANENCIA'].apply(lambda x: 'CRÍTICO' if x >= pd.Timedelta(hours=4) else 'ACEITÁVEL')
+
+def critico(row):
+    if (row['STATUS'] == 'Liberado') or (row['STATUS'] == 'Não Chegou'):
+        return 'ok'
+    elif row['PERMANENCIA'] >= pd.Timedelta(hours=4):
+        return 'CRÍTICO'
+    else:
+        return 'ok'
+
+bo['STT'] = bo.apply(critico, axis=1)
 bo = bo[bo['STT'] == 'CRÍTICO']
 
 st.dataframe(bo)
