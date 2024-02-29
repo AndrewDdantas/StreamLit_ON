@@ -34,7 +34,7 @@ status.loc['Total'] = status.sum()
 status = status.reset_index()
 status['VALTOTAL'] = status['VALTOTAL'].apply(fmt_num)
 
-top_lotes = carteira_vendas[(carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO') & [carteira_vendas['STATUS'] != '6-Conferido Aguardando Fat']]
+top_lotes = carteira_vendas[(carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO') & ([carteira_vendas['STATUS'] != '6-Conferido Aguardando Fat'])]
 top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 
