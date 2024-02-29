@@ -14,9 +14,12 @@ client = gs.authorize(credentials)
 BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
 fechamento = BASE_STREAMLIT.worksheet('FECHAMENTO')
 fechamento = pd.DataFrame(fechamento.get_values('A2:B26'))
+base = BASE_STREAMLIT.worksheet('CARTEIRA')
+base = base.get_values('A2:AC')
 
 
-carteira  = pd.read_csv('https://redash-inteligencia-comercial.luizalabs.com/api/queries/3531/results.csv?api_key=nExJrIAskPYp9I3QWqimn149MBl3OcCK5bzUeZRC')
+carteira  = pd.DataFrame(base)
+carteira.columns = ['NUMPEDVEN','TPNOTA','TIPO_PEDIDO','CODFILTRANSFFAT','CANAL_VENDAS','CODMODAL','DESCRICAO','MODALIDADE','DESCRICAOROTA','DATA_APROVACAO','DTPEDIDO','DTENTREGA','PREVENTREGA','DTLIBFAT_MOD','FAMILIA','FILORIG','STATUS','ITEM','LINHA','NUMLOTE','NUMPEDCOMP','QTCOMP','PRECOUNIT','CUB_UNIT','STATUS_OPERACAO','SITUACAO','STATUS_OPERACAO_GERENCIAL','CUBTOTAL','VALTOTAL']
 carteira_vendas = carteira[(carteira['TIPO_PEDIDO'] == 'VENDAS') & (carteira['STATUS_OPERACAO_GERENCIAL'] != 'PROGRAMADO')]
 
 def num(valor):
