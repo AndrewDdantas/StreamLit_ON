@@ -269,7 +269,7 @@ col1.pyplot(fig)
 fig, ax = plt.subplots(2, 1, figsize=(2+len(som['QT_SEPARADO'])*0.9, 10))
 som['HORA'] = som['HORA'].astype(int)
 som = som.sort_values('HORA')
-ax[0].bar(som['HORA']astype(str),som['QT_SEPARADO'])
+ax[0].bar(som['HORA'].astype(str),som['QT_SEPARADO'])
 ax[0].grid(False)
 y = max(som['QT_SEPARADO'])*1.2
 ax[0].set_ylim(0,y)
