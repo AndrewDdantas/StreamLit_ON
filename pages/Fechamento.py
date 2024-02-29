@@ -5,6 +5,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import streamlit as st
 
+st.set_page_config(
+    page_title="Meu App Streamlit",
+    page_icon=":chart_with_upwards_trend:",
+    layout="wide",  # Pode ser "wide" ou "centered"
+    initial_sidebar_state="collapsed",  # Pode ser "auto", "expanded", ou "collapsed"
+)
+
 scope = ['https://spreadsheets.google.com/feeds', # Definição de link para conexão com API.
         'https://www.googleapis.com/auth/drive'] 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
