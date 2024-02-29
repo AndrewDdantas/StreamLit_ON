@@ -207,6 +207,8 @@ data_hoje = hoje.strftime('%Y-%m-%d')
 join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
 
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
+som['HORA'] = som['HORA'].astype(int)
+som = som.sort_values('HORA')
 
 soma_m = join_turno.groupby(['TURNO_x','DT_COMPETENCIA','STATUS','sort']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index().sort_values('sort')
 soma_m = soma_m[['TURNO_x','DT_COMPETENCIA','STATUS','QT_SEPARADO','CUBAGEM']]
@@ -267,8 +269,6 @@ col1, col2 = st.columns(2)
 col1.pyplot(fig)
 
 fig, ax = plt.subplots(2, 1, figsize=(2+len(som['QT_SEPARADO'])*0.9, 10))
-som['HORA'] = som['HORA'].astype(int)
-som = som.sort_values('HORA')
 ax[0].bar(som['HORA'].astype(str),som['QT_SEPARADO'])
 ax[0].grid(False)
 y = max(som['QT_SEPARADO'])*1.2
@@ -284,8 +284,6 @@ ax[0].legend([f'Média {avg}',f'Total {smm}'],loc ="upper left")
 ax[0].set_title(f'Peças')
 
 y = max(som['CUBAGEM'])*1.2
-som['HORA'] = som['HORA'].astype(int)
-som = som.sort_values('HORA')
 ax[1].bar(som['HORA'].astype(str),som['CUBAGEM'])
 ax[1].set_ylim(0,y)
 ax[1].grid(False)
