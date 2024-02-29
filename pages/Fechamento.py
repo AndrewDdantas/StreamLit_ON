@@ -35,7 +35,9 @@ status = status.reset_index()
 status['VALTOTAL'] = status['VALTOTAL'].apply(fmt_num)
 
 top_lotes = carteira_vendas[carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO']
-top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).head(10)
+top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).head(10).reset_index()
+top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
+
 
 resultado = carteira_vendas['VALTOTAL'].sum()
 meta = 1624000
@@ -45,9 +47,9 @@ fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0]
 
 
 col1, col2 = st.columns(2)
-col1.write(f'Resultado: {resultado}')
-col1.write(f'Meta: {meta}')
-col1.write(f'Dif: {resultado-meta}')
+col1.write(f'Resultado: {fmt_num(resultado)}')
+col1.write(f'Meta: {fmt_num(meta)}')
+col1.write(f'Dif: {fmt_num(resultado-meta)}')
 
 col2.dataframe(top_lotes)
 
