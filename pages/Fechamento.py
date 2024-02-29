@@ -34,7 +34,7 @@ status.loc['Total'] = status.sum()
 status = status.reset_index()
 status['VALTOTAL'] = status['VALTOTAL'].apply(fmt_num)
 
-top_lotes = carteira_vendas[carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO']
+top_lotes = carteira_vendas[(carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO') & [carteira_vendas['STATUS'] != '6-Conferido Aguardando Fat']]
 top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 
@@ -50,6 +50,7 @@ col1, col2 = st.columns(2)
 col1.write(f'Resultado: {fmt_num(resultado)}')
 col1.write(f'Meta: {fmt_num(meta)}')
 col1.write(f'Dif: {fmt_num(resultado-meta)}')
+col1.dataframe(status)
 
 col2.dataframe(top_lotes)
 
