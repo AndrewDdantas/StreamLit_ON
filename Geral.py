@@ -29,11 +29,10 @@ def fmt_num(valor, tipo, casas=0): # Função para formatar números.
 st.set_page_config(
     page_title="Base Carteira",
     page_icon=":chart_with_upwards_trend:",
-    layout="wide",  # Pode ser "wide" ou "centered"
-    initial_sidebar_state="auto",  # Pode ser "auto", "expanded", ou "collapsed"
+    layout="wide", 
+    initial_sidebar_state="auto",
 )
 
-# Adicionando um cabeçalho personalizado
 st.title('Bem vindo')
 
 st.write('Carteira Liberados')
