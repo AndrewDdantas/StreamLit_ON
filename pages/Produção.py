@@ -204,7 +204,7 @@ else:
     hoje = datetime.now()
 data_hoje = hoje.strftime('%Y-%m-%d')
 
-join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == '2024-02-29']
+join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == '2024-02-27']
 
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
 som['HORA'] = som['HORA'].astype(int)
