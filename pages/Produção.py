@@ -216,10 +216,11 @@ soma_m = soma_m[['TURNO_x','DT_COMPETENCIA','STATUS','QT_SEPARADO','CUBAGEM']]
 unique_data = soma_m['DT_COMPETENCIA'].unique()
 o = 0
 
+
 for i in unique_data:
     o += 1
     dt = i
-    soma_l = soma_m[soma_m['DT_COMPETENCIA'] == '2024-02-29']
+    soma_l = soma_m[soma_m['DT_COMPETENCIA'] == dt]
     soma_f = soma_m.groupby(['TURNO_x']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
     
     fig, axs = plt.subplots(2, len(soma_f), figsize=(len(soma_f)*5, 10))
