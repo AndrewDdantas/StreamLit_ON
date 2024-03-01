@@ -34,7 +34,7 @@ st.set_page_config(
 )
 
 # Adicionando um cabeçalho personalizado
-st.title('Bem vindo, Neo!')
+st.title('Bem vindo')
 
 st.write('Carteira Liberados')
 
