@@ -204,7 +204,7 @@ else:
     hoje = datetime.now()
 data_hoje = hoje.strftime('%Y-%m-%d')
 
-join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
+join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == '2024-02-29']
 
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
 som['HORA'] = som['HORA'].astype(int)
@@ -215,6 +215,7 @@ soma_m = soma_m[['TURNO_x','DT_COMPETENCIA','STATUS','QT_SEPARADO','CUBAGEM']]
 
 unique_data = soma_m['DT_COMPETENCIA'].unique()
 o = 0
+
 for i in unique_data:
     o += 1
     dt = i
