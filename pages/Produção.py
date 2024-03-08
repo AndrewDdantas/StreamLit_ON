@@ -122,7 +122,7 @@ join_dados['STATUS_AJUSTADO'] = join_dados.apply(definir_status, axis=1)
 
 pendente = join_dados[join_dados['STATUS_AJUSTADO'] == 'PENDENTE']
 
-st.dataframe(join_dados)
+st.dataframe(pendente)
 
 pendente = pendente['DTPROGRAMACAO'].sort_values().unique()
 
