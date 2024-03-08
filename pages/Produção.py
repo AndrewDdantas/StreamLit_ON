@@ -122,8 +122,6 @@ join_dados['STATUS_AJUSTADO'] = join_dados.apply(definir_status, axis=1)
 
 pendente = join_dados[join_dados['STATUS_AJUSTADO'] == 'PENDENTE']
 
-st.dataframe(pendente)
-
 pendente = pendente['DTPROGRAMACAO'].sort_values().unique()
 
 hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CUB_SEPARADA':'sum'}).reset_index()
