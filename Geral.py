@@ -33,6 +33,8 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
+st.sidebar.page_link('pages/Produção.py', label='Produção')
+
 st.title('Bem vindo')
 
 st.write('Carteira Liberados')
