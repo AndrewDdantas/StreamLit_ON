@@ -303,5 +303,3 @@ ax[1].set_title(f'Cubagem')
 fig.suptitle(f'Acompanhamento hora a hora {data}')
 
 col2.pyplot(fig)
-
-
