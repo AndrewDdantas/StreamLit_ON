@@ -158,7 +158,7 @@ while i <= len(data_dist):
 
     
     pecas = te[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']]
-    pecas['PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
+    pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'PEN_PEÇAS'] = pecas['PEN_PEÇAS'].apply(fmt_num, tipo='NORMAL')
 
