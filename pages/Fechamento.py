@@ -30,6 +30,7 @@ fechamento = fechamento[(fechamento[0].dt.day == dia_fil) | (fechamento[0] == f'
 fechamento[0] = fechamento[0].dt.strftime("%Y-%m-%d %H")
 
 
+
 base = BASE_STREAMLIT.worksheet('CARTEIRA')
 base = base.get_values('A2:AC')
 
@@ -40,9 +41,12 @@ carteira_vendas = carteira[(carteira['TIPO_PEDIDO'] == 'VENDAS') & (carteira['ST
 
 def num(valor):
     return float(valor.replace(',','.'))
+fechamento[1] = fechamento[1].apply(num)
 def fmt_num(valor):
-    return "{:,.0f}".format(str(valor))
-
+    if isinstance(valor, str):
+        return valor
+    else:
+        return "{:,.0f}".format(valor)
 
 carteira_vendas['VALTOTAL'] = carteira_vendas['VALTOTAL'].apply(num)
 
