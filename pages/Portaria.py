@@ -142,7 +142,7 @@ def colorir_linha(s):
 df_estilizado = merge.style.apply(colorir_linha, subset=['STATUS'])
 
 # Convertendo o DataFrame estilizado para HTML
-html = df_estilizado.to_html(escape=False)
+html = df_estilizado.to_html(escape=False, index=False)
 
 # Exibindo o DataFrame estilizado no Streamlit
 st.markdown(html, unsafe_allow_html=True)
