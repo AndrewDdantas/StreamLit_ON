@@ -46,7 +46,8 @@ def num(valor):
         return float(valor.replace(',','.'))
     except:
         return valor
-fechamento[1] = fechamento[1].astype(num)
+
+fechamento[1] = fechamento[1].apply(num)
 def fmt_num(valor):
     if isinstance(valor, str):
         return valor
