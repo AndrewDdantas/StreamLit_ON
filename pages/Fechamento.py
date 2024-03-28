@@ -42,8 +42,11 @@ carteira.columns = ['NUMPEDVEN','TPNOTA','TIPO_PEDIDO','CODFILTRANSFFAT','CANAL_
 carteira_vendas = carteira[(carteira['TIPO_PEDIDO'] == 'VENDAS') & (carteira['STATUS_OPERACAO_GERENCIAL'] != 'PROGRAMADO')]
 
 def num(valor):
-    return float(valor.replace(',','.'))
-fechamento[1] = fechamento[1].astype(float)
+    try:
+        return float(valor.replace(',','.'))
+    except:
+        return valor
+fechamento[1] = fechamento[1].astype(num)
 def fmt_num(valor):
     if isinstance(valor, str):
         return valor
