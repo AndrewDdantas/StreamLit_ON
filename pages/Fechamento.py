@@ -67,9 +67,8 @@ top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 
 
 resultado = carteira_vendas['VALTOTAL'].sum()
-meta = 1624000
+meta = 1210000
 
-#fechamento[1] = fechamento[1].apply(lambda x: 0 if x == '' else x.replace('.', '')).fillna(0).astype(float)
 fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0] + ' H:' + fechamento[0].str.split('-').str[2].str.split(' ').str[1]
 
 
@@ -84,13 +83,13 @@ col2.dataframe(top_lotes)
 bas, ax2 = plt.subplots(1, 1,  figsize=(30, 7))
 
 ax2.plot(fechamento[0].values.tolist() , fechamento[1].values.tolist())
-ax2.set_title('Fechamento 29/02/2024')
+ax2.set_title('Fechamento 31/03/2024')
 st.table(fechamento)
 
 for index, val in enumerate(fechamento[1]):
     valu = fmt_num(val)
     ax2.text(index, val, f'{valu}', ha='center', va='bottom', color='white', fontsize=16)
-    rect = patches.Rectangle((index-0.7, val), 1.3, 200000, linewidth=1, edgecolor='b', facecolor='b', alpha=1)
+    rect = patches.Rectangle((index-0.7, val), 1.3, 300000, linewidth=1, edgecolor='b', facecolor='b', alpha=1)
     ax2.add_patch(rect)
 
 if resultado < meta:
@@ -98,7 +97,7 @@ if resultado < meta:
 else:
     c = 'r'
 
-ax2.axhline(y=meta, color=c, linestyle='--', label='Meta: R$1.624.000')
+ax2.axhline(y=meta, color=c, linestyle='--', label='Meta: R$1.210.000')
 ax2.text(24, meta, f'Meta:\n{fmt_num(meta)}', ha='center', va='bottom', color='white', fontsize=16)
 rect = patches.Rectangle((len(fechamento[0]) - 2, meta+10000), 2, 400000, linewidth=1, edgecolor=c, facecolor=c, alpha=1)
 ax2.add_patch(rect)
