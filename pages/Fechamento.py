@@ -79,7 +79,7 @@ ax2.plot(fechamento[0].values.tolist() , fechamento[1].values.tolist())
 ax2.set_title('Fechamento 29/02/2024')
 for index, val in enumerate(fechamento[1]):
     valu = str(fmt_num(val))
-    ax2.text(index, str(val), f'{valu}', ha='center', va='bottom', color='white', fontsize=16)
+    ax2.text(str(index), str(val), f'{valu}', ha='center', va='bottom', color='white', fontsize=16)
     rect = patches.Rectangle((index-0.7, val), 1.3, 200000, linewidth=1, edgecolor='b', facecolor='b', alpha=1)
     ax2.add_patch(rect)
 
