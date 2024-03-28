@@ -28,6 +28,7 @@ dia = datetime.now()
 dia_fil = int(dia.strftime("%d"))
 fechamento = fechamento[(fechamento[0].dt.day == dia_fil) | (fechamento[0] == f'2024-03-{dia_fil+1} 00:00:00')]
 fechamento[0] = fechamento[0].dt.strftime("%Y-%m-%d %H")
+fechamento = fechamento.fillna(0)
 
 
 
