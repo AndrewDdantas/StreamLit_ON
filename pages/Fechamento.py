@@ -58,7 +58,7 @@ top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 resultado = carteira_vendas['VALTOTAL'].sum()
 meta = 1624000
 
-fechamento[1] = fechamento[1].apply(lambda x: 0 if x == '' else x.replace('.', '')).fillna(0).astype(float)
+#fechamento[1] = fechamento[1].apply(lambda x: 0 if x == '' else x.replace('.', '')).fillna(0).astype(float)
 fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0] + ' H:' + fechamento[0].str.split('-').str[2].str.split(' ').str[1]
 
 
