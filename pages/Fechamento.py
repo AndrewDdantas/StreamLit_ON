@@ -76,7 +76,7 @@ col1, col2 = st.columns(2)
 col1.write(f'Resultado: {fmt_num(resultado)}')
 col1.write(f'Meta: {fmt_num(meta)}')
 col1.write(f'Dif: {fmt_num(resultado-meta)}')
-col1.dataframe(status)
+col1.dataframe(data=status, hide_index=True)
 
 col2.dataframe(top_lotes)
 
