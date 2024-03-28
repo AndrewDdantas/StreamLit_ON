@@ -41,7 +41,7 @@ carteira_vendas = carteira[(carteira['TIPO_PEDIDO'] == 'VENDAS') & (carteira['ST
 def num(valor):
     return float(valor.replace(',','.'))
 def fmt_num(valor):
-    return "{:,.0f}".format(valor)
+    return "{:,.0f}".format(str(valor))
 
 
 carteira_vendas['VALTOTAL'] = carteira_vendas['VALTOTAL'].apply(num)
