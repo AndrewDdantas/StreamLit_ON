@@ -65,6 +65,9 @@ top_lotes = carteira_vendas[(carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO'
 top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 
+top_pedidos = carteira_vendas.groupby('NUMPEDVEN').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
+top_pedidos['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
+
 
 resultado = carteira_vendas['VALTOTAL'].sum()
 meta = 1210000
@@ -72,7 +75,7 @@ meta = 1210000
 fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0] + ' H:' + fechamento[0].str.split('-').str[2].str.split(' ').str[1]
 
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 col1.write(f'Resultado: {fmt_num(resultado)}')
 col1.write(f'Meta: {fmt_num(meta)}')
 col1.write(f'Dif: {fmt_num(resultado-meta)}')
@@ -80,6 +83,7 @@ col1.dataframe(data=status, hide_index=True)
 
 col2.dataframe(data=top_lotes, hide_index=True)
 
+col3.dataframe(top_pedidos, hide_index=True)
 bas, ax2 = plt.subplots(1, 1,  figsize=(30, 7))
 
 ax2.plot(fechamento[0].values.tolist() , fechamento[1].values.tolist())
