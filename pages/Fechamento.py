@@ -4,7 +4,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import streamlit as st
-
+from datetime import datetime
 st.set_page_config(
     page_title="Meu App Streamlit",
     page_icon=":chart_with_upwards_trend:",
@@ -19,8 +19,17 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name(
 client = gs.authorize(credentials)
 
 BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
+
+
 fechamento = BASE_STREAMLIT.worksheet('FECHAMENTO')
-fechamento = pd.DataFrame(fechamento.get_values('A2:B26'))
+fechamento = pd.DataFrame(fechamento.get_values('A2:c98'))
+fechamento[0] = pd.to_datetime(fechamento[0] +":00")
+dia = datetime.now()
+dia_fil = int(dia.strftime("%d"))
+fechamento = fechamento[(df[0].dt.day == dia_fil) | (df[0] == f'2024-03-{dia_fil+1} 00:00:00')]
+fechamento[0] = fechamento[0].dt.strftime("%Y-%m-%d %H")
+
+
 base = BASE_STREAMLIT.worksheet('CARTEIRA')
 base = base.get_values('A2:AC')
 
