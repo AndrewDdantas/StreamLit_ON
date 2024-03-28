@@ -52,7 +52,7 @@ def fmt_num(valor):
     if isinstance(valor, str):
         return valor
     else:
-        return "{:,.0f}".format(valor)
+        return "{:,.0f}".format(valor).replace(',', 'X').replace('.', ',').replace('X', '.')
 
 carteira_vendas['VALTOTAL'] = carteira_vendas['VALTOTAL'].apply(num)
 
