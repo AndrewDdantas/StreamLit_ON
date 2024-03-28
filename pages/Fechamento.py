@@ -43,7 +43,6 @@ carteira_vendas = carteira[(carteira['TIPO_PEDIDO'] == 'VENDAS') & (carteira['ST
 
 def num(valor):
     return float(valor.replace(',','.'))
-fechamento[1] = fechamento[1].apply(num)
 def fmt_num(valor):
     if isinstance(valor, str):
         return valor
