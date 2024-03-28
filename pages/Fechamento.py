@@ -78,7 +78,7 @@ bas, ax2 = plt.subplots(1, 1,  figsize=(30, 7))
 ax2.plot(fechamento[0].values.tolist() , fechamento[1].values.tolist())
 ax2.set_title('Fechamento 29/02/2024')
 st.table(fechamento)
-print(fechamento.astype())
+print(type( fechamento)
 for index, val in enumerate(fechamento[1]):
     valu = fmt_num(val)
     ax2.text(index, val, f'{valu}', ha='center', va='bottom', color='white', fontsize=16)
