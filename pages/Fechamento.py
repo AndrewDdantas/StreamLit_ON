@@ -78,7 +78,7 @@ col1.write(f'Meta: {fmt_num(meta)}')
 col1.write(f'Dif: {fmt_num(resultado-meta)}')
 col1.dataframe(data=status, hide_index=True)
 
-col2.dataframe(top_lotes)
+col2.dataframe(data=top_lotes, hide_index=True)
 
 bas, ax2 = plt.subplots(1, 1,  figsize=(30, 7))
 
