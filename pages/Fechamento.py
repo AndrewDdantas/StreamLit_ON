@@ -25,6 +25,7 @@ fechamento = BASE_STREAMLIT.worksheet('FECHAMENTO')
 fechamento = pd.DataFrame(fechamento.get_values('A2:c98'))
 fechamento[0] = pd.to_datetime(fechamento[0] +":00")
 dia = datetime.now()
+st.write(dia)
 dia_fil = int(dia.strftime("%d"))
 fechamento = fechamento[(fechamento[0].dt.day == dia_fil) | (fechamento[0] == f'2024-03-{dia_fil+1} 00:00:00')]
 fechamento[0] = fechamento[0].dt.strftime("%Y-%m-%d %H")
