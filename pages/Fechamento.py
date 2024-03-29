@@ -66,7 +66,7 @@ top_lotes = carteira_vendas[(carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO'
 top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 
-top_pedidos = carteira[(carteira_vendas['STATUS_OPERACAO'] != 'EM PROCESSO')]
+top_pedidos = carteira[carteira_vendas['STATUS_OPERACAO'] != 'EM PROCESSO']
 top_pedidos = top_pedidos.groupby('NUMPEDVEN').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_pedidos['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
 
