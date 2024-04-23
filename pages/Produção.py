@@ -105,7 +105,6 @@ base = BASE_STREAMLIT.worksheet('STATUS_OPERAÇÃO')
 base = base.get_values('A2:N')
 wis = pd.DataFrame(base)
 wis.columns = ['DATA_CORTE','LOTE','PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','CANCELADO','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']
-#wis = pd.read_csv('https://redash-inteligencia-comercial.luizalabs.com/api/queries/3298/results.csv?api_key=v7DWvNtOfySsUbGbiemzgJbfapQDyZeu77A9dOm0')
 wis['LOTE'] = wis['LOTE'].astype(str)
 wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','CANCELADO','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']] = wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','CANCELADO','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']].apply(lambda x: x.str.replace(',','.')).astype(float)
 
@@ -113,7 +112,7 @@ join_dados = pd.merge(wis,dados_grade,how="inner", on="LOTE")
 
     
 def definir_status(row):
-    if row['STATUS'] == '7. Carreg. Finalizado' or row['PROGRAMACAO'] - row['SEPARADO'] <= 0: 
+    if row['STATUS'] == '7. Carreg. Finalizado' or row['PROGRAMACAO'] - row['SEPARADO'] <= 0 or row['STATUS'] == '7. Carreg. Finalizado': 
         return 'SEPARADO'
     else:
         return 'PENDENTE'
