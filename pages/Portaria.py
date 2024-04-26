@@ -69,7 +69,7 @@ def rolar_dataframe(window_size):
 
         index = (index + 1) % n_rows
 
-        sleep(10)
+        sleep(5)
         if (datetime.now()-timedelta(hours=3)) > h_atualizacao:
             hora_cont.subheader((datetime.now()-timedelta(hours=3)).strftime('%H:%M'))
             df = pd.DataFrame(portaria_controle.get_values('A2:H'))
