@@ -65,7 +65,7 @@ def rolar_dataframe(window_size):
         window = df.iloc[index:index+window_size]
         styled_df = window.style.map(apply_status_color, subset=['STATUS PRODUÇÃO'])
         
-        container.table(styled_df)
+        container.table(styled_df,index=False)
 
         index = (index + 1) % n_rows
 
