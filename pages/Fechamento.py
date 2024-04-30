@@ -58,7 +58,7 @@ top_pedidos = top_pedidos.groupby('NUMPEDVEN').agg({'VALTOTAL': 'sum'}).sort_val
 top_pedidos['VALTOTAL'] = top_pedidos['VALTOTAL'].apply(fmt_num)
 
 lot_faturar = carteira_vendas[carteira_vendas['STATUS'] == '6-Conferido Aguardando Fat']
-lote_faturar = carteira_vendas['NUMLOTE'].nunique()
+lote_faturar = lot_faturar['NUMLOTE'].nunique()
 
 resultado = carteira_vendas['VALTOTAL'].sum()
 meta = 1129333
