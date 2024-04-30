@@ -70,11 +70,11 @@ col1, col2, col3 = st.columns(3)
 col1.write(f'Resultado: {fmt_num(resultado)}')
 col1.write(f'Meta: {fmt_num(meta)}')
 col1.write(f'Dif: {fmt_num(resultado-meta)}')
+col1.write(f"Lotes para Faturar: " + str(lote_faturar))
 col1.dataframe(data=status, hide_index=True)
 
 col2.dataframe(data=top_lotes, hide_index=True)
 
 col3.dataframe(top_pedidos, hide_index=True)
 
-col3.write(f"Lotes para Faturar: " + str(lote_faturar))
 
