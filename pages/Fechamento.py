@@ -57,6 +57,8 @@ top_pedidos = carteira_vendas[carteira_vendas['STATUS_OPERACAO'] != 'EM PROCESSO
 top_pedidos = top_pedidos.groupby('NUMPEDVEN').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_pedidos['VALTOTAL'] = top_pedidos['VALTOTAL'].apply(fmt_num)
 
+lot_faturar = carteira_vendas[carteira_vendas['STATUS'] == '6-Conferido Aguardando Fat']
+lote_faturar = carteira_vendas['NUMLOTE'].nunique()
 
 resultado = carteira_vendas['VALTOTAL'].sum()
 meta = 1129333
@@ -73,4 +75,6 @@ col1.dataframe(data=status, hide_index=True)
 col2.dataframe(data=top_lotes, hide_index=True)
 
 col3.dataframe(top_pedidos, hide_index=True)
+
+col3.write(f"Lotes para Faturar: " + lote_faturar)
 
