@@ -21,9 +21,6 @@ client = gs.authorize(credentials)
 BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
 
 
-
-
-
 base = BASE_STREAMLIT.worksheet('CARTEIRA')
 base = base.get_values('A2:AC')
 
