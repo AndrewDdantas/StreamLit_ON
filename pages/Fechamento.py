@@ -21,16 +21,6 @@ client = gs.authorize(credentials)
 BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
 
 
-"""fechamento = BASE_STREAMLIT.worksheet('FECHAMENTO')
-fechamento = pd.DataFrame(fechamento.get_values('A2:c98'))
-fechamento[0] = pd.to_datetime(fechamento[0] +":00")
-dia = datetime.now() - timedelta(hours=4)
-st.write(dia)
-dia_fil = int(dia.strftime("%d"))
-fechamento = fechamento[(fechamento[0].dt.day == dia_fil) | (fechamento[0] == f'2024-03-{dia_fil+1} 00:00:00')]
-fechamento[0] = fechamento[0].dt.strftime("%Y-%m-%d %H")
-fechamento = fechamento.fillna(0)
-fechamento[1] = fechamento[1].apply(lambda x: 0 if x == '' else x)"""
 
 
 
@@ -48,7 +38,7 @@ def num(valor):
     except:
         return valor
 
-fechamento[1] = fechamento[1].apply(num)
+#fechamento[1] = fechamento[1].apply(num)
 def fmt_num(valor):
     if isinstance(valor, str):
         return valor
