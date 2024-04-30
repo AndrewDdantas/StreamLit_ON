@@ -21,7 +21,7 @@ client = gs.authorize(credentials)
 BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
 
 
-fechamento = BASE_STREAMLIT.worksheet('FECHAMENTO')
+"""fechamento = BASE_STREAMLIT.worksheet('FECHAMENTO')
 fechamento = pd.DataFrame(fechamento.get_values('A2:c98'))
 fechamento[0] = pd.to_datetime(fechamento[0] +":00")
 dia = datetime.now() - timedelta(hours=4)
@@ -30,7 +30,7 @@ dia_fil = int(dia.strftime("%d"))
 fechamento = fechamento[(fechamento[0].dt.day == dia_fil) | (fechamento[0] == f'2024-03-{dia_fil+1} 00:00:00')]
 fechamento[0] = fechamento[0].dt.strftime("%Y-%m-%d %H")
 fechamento = fechamento.fillna(0)
-fechamento[1] = fechamento[1].apply(lambda x: 0 if x == '' else x)
+fechamento[1] = fechamento[1].apply(lambda x: 0 if x == '' else x)"""
 
 
 
@@ -72,7 +72,7 @@ top_pedidos['VALTOTAL'] = top_pedidos['VALTOTAL'].apply(fmt_num)
 
 
 resultado = carteira_vendas['VALTOTAL'].sum()
-meta = 1210000
+meta = 1129333
 
 fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0] + ' H:' + fechamento[0].str.split('-').str[2].str.split(' ').str[1]
 
@@ -86,7 +86,8 @@ col1.dataframe(data=status, hide_index=True)
 col2.dataframe(data=top_lotes, hide_index=True)
 
 col3.dataframe(top_pedidos, hide_index=True)
-bas, ax2 = plt.subplots(1, 1,  figsize=(30, 7))
+
+"""bas, ax2 = plt.subplots(1, 1,  figsize=(30, 7))
 
 ax2.plot(fechamento[0].values.tolist() , fechamento[1].values.tolist())
 ax2.set_title('Fechamento 31/03/2024')
@@ -110,4 +111,4 @@ ax2.set_xticklabels(fechamento[0], rotation=45)
 ax2.yaxis.set_visible(False)
 plt.tight_layout()
 
-st.pyplot(bas)
+st.pyplot(bas)"""
