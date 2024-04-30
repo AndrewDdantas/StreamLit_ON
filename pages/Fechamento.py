@@ -76,5 +76,5 @@ col2.dataframe(data=top_lotes, hide_index=True)
 
 col3.dataframe(top_pedidos, hide_index=True)
 
-col3.write(f"Lotes para Faturar: " + lote_faturar)
+col3.write(f"Lotes para Faturar: " + str(lote_faturar))
 
