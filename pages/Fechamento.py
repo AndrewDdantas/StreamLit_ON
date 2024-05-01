@@ -27,7 +27,8 @@ base = base.get_values('A2:AC')
 wis = BASE_STREAMLIT.worksheet('STATUS_OPERAÇÃO')
 wis = wis.get_values('A2:N')
 wis = pd.DataFrame(wis)
-
+wis = wis[[1,12,10]]
+wis.columns = ['Lote', 'Pendente Sep', 'Pendente Conf']
 
 carteira  = pd.DataFrame(base)
 carteira.columns = ['NUMPEDVEN','TPNOTA','TIPO_PEDIDO','CODFILTRANSFFAT','CANAL_VENDAS','CODMODAL','DESCRICAO','MODALIDADE','DESCRICAOROTA','DATA_APROVACAO','DTPEDIDO','DTENTREGA','PREVENTREGA','DTLIBFAT_MOD','FAMILIA','FILORIG','STATUS','ITEM','LINHA','NUMLOTE','NUMPEDCOMP','QTCOMP','PRECOUNIT','CUB_UNIT','STATUS_OPERACAO','SITUACAO','STATUS_OPERACAO_GERENCIAL','CUBTOTAL','VALTOTAL']
@@ -56,7 +57,7 @@ status['VALTOTAL'] = status['VALTOTAL'].apply(fmt_num)
 top_lotes = carteira_vendas[(carteira_vendas['STATUS_OPERACAO'] == 'EM PROCESSO') & (carteira_vendas['STATUS'] != '6-Conferido Aguardando Fat')]
 top_lotes = top_lotes.groupby('NUMLOTE').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
 top_lotes['VALTOTAL'] = top_lotes['VALTOTAL'].apply(fmt_num)
-top_lotes = pd.merge(top_lotes, wis, how='left', left_on='NUMLOTE', right_on=1)
+top_lotes = pd.merge(top_lotes, wis, how='left', left_on='NUMLOTE', right_on='Lote')
 
 top_pedidos = carteira_vendas[carteira_vendas['STATUS_OPERACAO'] != 'EM PROCESSO']
 top_pedidos = top_pedidos.groupby('NUMPEDVEN').agg({'VALTOTAL': 'sum'}).sort_values('VALTOTAL', ascending=False).head(10).reset_index()
