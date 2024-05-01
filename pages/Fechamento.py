@@ -25,7 +25,7 @@ base = BASE_STREAMLIT.worksheet('CARTEIRA')
 base = base.get_values('A2:AC')
 
 wis = BASE_STREAMLIT.worksheet('STATUS_OPERAÇÃO')
-wis = base.get_values('A2:N')
+wis = wis.get_values('A2:N')
 wis = pd.DataFrame(wis)
 
 
