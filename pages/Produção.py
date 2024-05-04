@@ -306,5 +306,7 @@ col2.pyplot(fig)
 
 ba = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO','LOTE']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CUB_SEPARADA':'sum'}).reset_index()
 ba = ba.loc[ba['DTPROGRAMACAO'].isin(pendente)]
+ba['Pendente'] = ba['PROGRAMACAO'] - ba['SEPARADO'] 
+ba = ba.loc[ba['Pendente'] > 0]
 
 st.dataframe(ba)
