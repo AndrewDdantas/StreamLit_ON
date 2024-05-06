@@ -5,11 +5,10 @@ import cv2
 class QRCodeReader(VideoTransformerBase):
     def transform(self, frame):
         image = frame.to_ndarray(format="bgr24")
-        detector = cv2.QRCodeDetector()
-        data, bbox, _ = detector.detectAndDecode(image)
+        data = decode_qr_code(image)
         if data:
             st.success(f"QR Code lido: {data}")
-        return image
+        return frame
 
 def main():
     st.title("Leitor de QR Code")
