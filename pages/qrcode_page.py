@@ -1,13 +1,11 @@
 import streamlit as st
 import cv2
-from pyzbar.pyzbar import decode
-from PIL import Image
+import numpy as np
 
 def decode_qr_code(image):
-    data = decode(image)
-    if data:
-        return data[0].data.decode('utf-8')
-    return None
+    detector = cv2.QRCodeDetector()
+    data, _, _ = detector.detectAndDecodeMulti(image)
+    return data
 
 def main():
     st.title("Leitor de QR Code")
@@ -21,8 +19,8 @@ def main():
         if ret:
             cap.release()
             st.sidebar.image(frame, channels="BGR", caption="Imagem Capturada")
-            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            qr_code_data = decode_qr_code(image)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            qr_code_data = decode_qr_code(gray)
             if qr_code_data:
                 st.success(f"QR Code lido: {qr_code_data}")
             else:
@@ -30,5 +28,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
