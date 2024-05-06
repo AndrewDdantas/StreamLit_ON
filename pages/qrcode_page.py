@@ -11,9 +11,9 @@ def main():
 
     # Se o botão for pressionado
     if capture_button:
-        # Usando o Streamlit para capturar a imagem da câmera
+        # Capturando a imagem da câmera usando o Streamlit
         st.write("Capturando imagem da câmera...")
-        image = st.image([], channels="BGR", caption="Imagem Capturada")
+        img = st.image([], channels="BGR", caption="Imagem Capturada")
         image_container = st.empty()
 
         # Processando a imagem com OpenCV
