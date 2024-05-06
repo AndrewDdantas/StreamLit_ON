@@ -13,7 +13,6 @@ def main():
     if capture_button:
         # Capturando a imagem da câmera usando o Streamlit
         st.write("Capturando imagem da câmera...")
-        img = st.image([], channels="BGR", caption="Imagem Capturada")
         image_container = st.empty()
 
         # Processando a imagem com OpenCV
@@ -24,11 +23,13 @@ def main():
         st.image(processed_image, caption="Imagem Processada", use_column_width=True)
 
 def process_image(image_container):
-    # Capturando a imagem da câmera usando o Streamlit
-    img = image_container.image_data
+    # Abrindo a câmera e capturando a imagem
+    cap = cv2.VideoCapture(0)
+    ret, frame = cap.read()
+    cap.release()
 
     # Convertendo a imagem para um formato adequado para processamento com OpenCV
-    img_array = np.array(img)
+    img_array = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # Processando a imagem usando OpenCV (por exemplo, converter para escala de cinza)
     # Aqui você pode adicionar qualquer processamento adicional que desejar
@@ -40,4 +41,3 @@ def process_image(image_container):
 
 if __name__ == "__main__":
     main()
-
