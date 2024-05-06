@@ -10,8 +10,8 @@ def decode_qr_code(image):
 def main():
     st.title("Leitor de QR Code")
 
-    st.sidebar.markdown("# Capturar Imagem")
-    capture = st.sidebar.button("Capturar")
+    st.markdown("# Capturar Imagem")
+    capture = st.button("Capturar")
 
     if capture:
         cap = cv2.VideoCapture(0)
