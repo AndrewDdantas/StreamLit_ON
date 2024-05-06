@@ -19,11 +19,11 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name(
     'credentials.json', scope) # Definição de acesso via chave json.
 client = gs.authorize(credentials)
 
-sheet = client.open_by_key('1pyFMoqM-onb1sBQiBDkNeenkt6WIx6DlBVHV4KhIEL4')
+sheet = client.open_by_key('1gPbStQWesvP3SyUB9r3RmiqHTKncrfFoOlCo_kzaRMU')
 worksheet = sheet.worksheet('Base SQL')
 
 
-data = worksheet.get_values('d:s')
+data = worksheet.get_values('a:p')
 
 df = pd.DataFrame(data)
 
