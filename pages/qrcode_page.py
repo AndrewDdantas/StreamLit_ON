@@ -1,18 +1,21 @@
 import streamlit as st
 from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
 import cv2
-from PIL import Image
 
-def decode_qr_code(image):
-    detector = cv2.QRCodeDetector()
-    data, bbox, _ = detector.detectAndDecode(image)
-    return data
+class QRCodeReader(VideoTransformerBase):
+    def transform(self, frame):
+        image = frame.to_ndarray(format="bgr24")
+        detector = cv2.QRCodeDetector()
+        data, bbox, _ = detector.detectAndDecode(image)
+        if data:
+            st.success(f"QR Code lido: {data}")
+        return image
 
 def main():
     st.title("Leitor de QR Code")
     webrtc_ctx = webrtc_streamer(
         key="example",
-        video_transformer_factory=decode_qr_code,
+        video_transformer_factory=QRCodeReader,
         async_transform=True,
     )
 
