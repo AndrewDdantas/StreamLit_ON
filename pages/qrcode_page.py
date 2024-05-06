@@ -1,24 +1,28 @@
+import cv2
 import streamlit as st
-from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
-from pyzbar import pyzbar
-from PIL import Image
+from qrcode import QRCode
 
-class QRCodeReader(VideoTransformerBase):
-    def transform(self, frame):
-        image = frame.to_image()
-        decoded_objects = pyzbar.decode(image)
-        for obj in decoded_objects:
-            if obj.type == 'QRCODE':
-                st.success(f"QR Code lido: {obj.data.decode('utf-8')}")
-        return image
+def decode_qr_code(image):
+    detector = cv2.QRCodeDetector()
+    data, bbox, _ = detector.detectAndDecode(image)
+    return data
 
 def main():
     st.title("Leitor de QR Code")
-    webrtc_ctx = webrtc_streamer(
-        key="example",
-        video_transformer_factory=QRCodeReader,
-        async_transform=True,
-    )
+
+    video_capture = cv2.VideoCapture(0)
+
+    while True:
+        _, frame = video_capture.read()
+        
+        data = decode_qr_code(frame)
+        
+        if data:
+            st.success(f"QR Code lido: {data}")
+        
+        # Exibir o frame na interface do Streamlit
+        st.image(frame, channels="BGR", use_column_width=True)
 
 if __name__ == "__main__":
     main()
+
