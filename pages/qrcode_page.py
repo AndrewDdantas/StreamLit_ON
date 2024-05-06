@@ -14,9 +14,6 @@ def main():
         key="example",
         video_transformer_factory=decode_qr_code,
         async_transform=True,
-        **{
-            "audio": False,
-        }
     )
 
 if __name__ == "__main__":
