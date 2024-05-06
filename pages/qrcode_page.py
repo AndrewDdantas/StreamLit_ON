@@ -17,7 +17,6 @@ def main():
         key="example",
         video_transformer_factory=QRCodeReader,
         async_transform=True,
-        video_codec="h264",  # Especifica o codec de vídeo
     )
 if __name__ == "__main__":
     main()
