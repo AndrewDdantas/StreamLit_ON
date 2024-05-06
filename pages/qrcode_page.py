@@ -14,17 +14,10 @@ class QRCodeReader(VideoTransformerBase):
 
 def main():
     st.title("Leitor de QR Code")
-    st.sidebar.title("Configurações")
-
     webrtc_ctx = webrtc_streamer(
         key="example",
         video_transformer_factory=QRCodeReader,
-        mode= "video",
         async_transform=True,
-        object_detection_sample_rate=5,
-        **{
-            "audio": False,
-        }
     )
 
 if __name__ == "__main__":
