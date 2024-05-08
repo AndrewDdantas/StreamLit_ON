@@ -22,9 +22,6 @@ def main():
         mode= "video",
         async_transform=True,
         object_detection_sample_rate=5,
-        **{
-            "audio": False,
-        }
     )
 
 if __name__ == "__main__":
