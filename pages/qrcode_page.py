@@ -1,44 +1,38 @@
-import streamlit as st
+from pyzbar.pyzbar import decode
 from PIL import Image
-import numpy as np
-import cv2
+import streamlit as st
+import json
 
-def main():
-    st.title("Captura e Processamento de Imagem")
+# Cria uma lista vazia para armazenar os dados lidos dos QR codes
+itens = []
 
-    # Usando o Streamlit para capturar a imagem da câmera
-    st.write("Por favor, clique no botão abaixo para capturar a imagem da câmera:")
-    capture_button = st.button("Capturar Imagem")
+# Função para ler o QR code de uma imagem e retornar os dados
+def ler_qrcode(arquivo):
+    img = Image.open(arquivo)
+    resultado = decode(img)
 
-    # Se o botão for pressionado
-    if capture_button:
-        # Capturando a imagem da câmera usando o Streamlit
-        st.write("Capturando imagem da câmera...")
-        image_container = st.empty()
+    for result in resultado:
+        dados = result.data.decode('utf-8')
+        dados = dados.replace("'", '"')
+        dados = json.loads(dados)
+        return 'Dados do QR: ' + dados.get('<<CPF>>')
 
-        # Processando a imagem com OpenCV
-        st.write("Processando imagem...")
-        processed_image = process_image(image_container)
+# Cria uma seção de formulário no Streamlit
+with st.form('Teste'):
+    # Adiciona um campo de upload de arquivo ao formulário
+    arq = st.file_uploader('Arquivo')
 
-        # Exibindo a imagem processada
-        st.image(processed_image, caption="Imagem Processada", use_column_width=True)
+    # Adiciona um botão de envio ao formulário
+    button = st.form_submit_button('Enviar')
 
-def process_image(image_container):
-    # Abrindo a câmera e capturando a imagem
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
-    cap.release()
+    # Verifica se o botão de envio foi pressionado
+    if button:
+        with st.spinner("Aguarde..."):
+            # Chama a função para ler o QR code e armazena o resultado em 'dad'
+            dad = ler_qrcode(arq)
+            st.write(dad)
+            # Adiciona o resultado à lista de itens
+            itens.append(dad)
 
-    # Convertendo a imagem para um formato adequado para processamento com OpenCV
-    img_array = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-    # Processando a imagem usando OpenCV (por exemplo, converter para escala de cinza)
-    # Aqui você pode adicionar qualquer processamento adicional que desejar
-
-    # Convertendo a imagem processada de volta para o formato adequado para exibição com Streamlit
-    processed_img = Image.fromarray(img_array)
-
-    return processed_img
-
-if __name__ == "__main__":
-    main()
+# Atualiza a lista exibida no Streamlit
+st.write(itens)
