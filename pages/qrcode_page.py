@@ -1,38 +1,31 @@
-from pyzbar.pyzbar import decode
-from PIL import Image
 import streamlit as st
-import json
+from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
+from pyzbar import pyzbar
+from PIL import Image
 
-# Cria uma lista vazia para armazenar os dados lidos dos QR codes
-itens = []
+class QRCodeReader(VideoTransformerBase):
+    def transform(self, frame):
+        image = frame.to_image()
+        decoded_objects = pyzbar.decode(image)
+        for obj in decoded_objects:
+            if obj.type == 'QRCODE':
+                st.success(f"QR Code lido: {obj.data.decode('utf-8')}")
+        return image
 
-# Função para ler o QR code de uma imagem e retornar os dados
-def ler_qrcode(arquivo):
-    img = Image.open(arquivo)
-    resultado = decode(img)
+def main():
+    st.title("Leitor de QR Code")
+    st.sidebar.title("Configurações")
 
-    for result in resultado:
-        dados = result.data.decode('utf-8')
-        dados = dados.replace("'", '"')
-        dados = json.loads(dados)
-        return 'Dados do QR: ' + dados.get('<<CPF>>')
+    webrtc_ctx = webrtc_streamer(
+        key="example",
+        video_transformer_factory=QRCodeReader,
+        mode= "video",
+        async_transform=True,
+        object_detection_sample_rate=5,
+        **{
+            "audio": False,
+        }
+    )
 
-# Cria uma seção de formulário no Streamlit
-with st.form('Teste'):
-    # Adiciona um campo de upload de arquivo ao formulário
-    arq = st.file_uploader('Arquivo')
-
-    # Adiciona um botão de envio ao formulário
-    button = st.form_submit_button('Enviar')
-
-    # Verifica se o botão de envio foi pressionado
-    if button:
-        with st.spinner("Aguarde..."):
-            # Chama a função para ler o QR code e armazena o resultado em 'dad'
-            dad = ler_qrcode(arq)
-            st.write(dad)
-            # Adiciona o resultado à lista de itens
-            itens.append(dad)
-
-# Atualiza a lista exibida no Streamlit
-st.write(itens)
+if __name__ == "__main__":
+    main()
