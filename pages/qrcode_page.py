@@ -19,5 +19,5 @@ def main():
         video_transformer_factory=QRCodeReader,
         async_transform=True,
 
-if __name__ == "__main__":
-    main()
+
+main()
