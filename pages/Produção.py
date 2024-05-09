@@ -137,7 +137,7 @@ data_dist = pendente.strftime('%d/%m/%Y')
 
 
 v = 5*len(data_dist)
-fig = plt.figure(figsize=(27, 10+v))
+fig = plt.figure(figsize=(27, 15+v))
 
 
 i = 1
