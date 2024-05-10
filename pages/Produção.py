@@ -140,7 +140,7 @@ v = 5*len(data_dist)
 if len(data_dist) > 3: 
     tea = 25+v
 else:
-    tea = 15+v
+    tea = 20+v
 fig = plt.figure(figsize=(27, tea))
 
 
