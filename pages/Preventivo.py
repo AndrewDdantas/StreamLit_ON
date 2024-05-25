@@ -31,6 +31,7 @@ scope = ['https://spreadsheets.google.com/feeds',
         'https://www.googleapis.com/auth/drive'] 
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(
     json, scope)
+client = gs.authorize(credentials)
 
 sheet = client.open_by_key('1gPbStQWesvP3SyUB9r3RmiqHTKncrfFoOlCo_kzaRMU')
 worksheet = sheet.worksheet('Base SQL')
