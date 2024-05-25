@@ -97,7 +97,7 @@ scope = ['https://spreadsheets.google.com/feeds',
         'https://www.googleapis.com/auth/drive'] 
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(
     json, scope)
-
+client = gs.authorize(credentials)
 
 # Baixando informações da grade
 planilha = client.open_by_key('13ZBSdVjqRsQQwE8a6abpi99myjo72w1ife-vjUrzMCs') 
