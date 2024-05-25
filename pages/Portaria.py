@@ -14,11 +14,24 @@ st.set_page_config(
 )
 
 
+json = {
+    "type": "service_account",
+    "project_id": st.secrets['project_id'],
+    "private_key_id": st.secrets['KEY'],
+    "private_key": st.secrets['private_key'],
+    "client_email": st.secrets['client_email'],
+    "client_id": st.secrets['client_id'],
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/case-693%40digital-layout-402513.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+    }
+
 scope = ['https://spreadsheets.google.com/feeds',
         'https://www.googleapis.com/auth/drive'] 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    './credentials.json', scope)
-client = gs.authorize(credentials)
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+    json, scope)
 
 
 BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
