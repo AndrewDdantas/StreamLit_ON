@@ -82,7 +82,7 @@ lot_faturar = carteira_vendas[carteira_vendas['STATUS'] == '6-Conferido Aguardan
 lote_faturar = lot_faturar['NUMLOTE'].nunique()
 
 resultado = carteira_vendas['VALTOTAL'].sum()
-meta = 1129333
+meta = 1116768
 
 #fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0] + ' H:' + fechamento[0].str.split('-').str[2].str.split(' ').str[1]
 
