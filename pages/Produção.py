@@ -213,7 +213,7 @@ opcap2 = ['b','c','a']
 join_turno['STATUS'] = np.select(condicao,opcap)
 join_turno['sort'] = np.select(condicao,opcap2)
 
-hoje = datetime.now()
+hoje = datetime.now() - timedelta(hours=3)
 h = int(hoje.strftime('%H'))
 if h <= 6:
     hoje = datetime.now() - timedelta(1)
