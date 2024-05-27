@@ -88,7 +88,7 @@ meta = 1116768
 
 
 col1, col2, col3 = st.columns(3)
-col1.subheader(f'Resultado: {fmt_num(resultado)}',divider='rainbow')
+col1.subheader(f'Resultado: {fmt_num(resultado)}')
 col1.subheader(f'Meta: {fmt_num(meta)}')
 if resultado-meta > 0:
    col1.subheader(f'Dif: :red[{fmt_num(resultado-meta)}]') 
