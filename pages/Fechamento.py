@@ -89,11 +89,11 @@ meta = 1116768
 
 col1, col2, col3 = st.columns(3)
 col1.subheader(f'Resultado: {fmt_num(resultado)}',divider='rainbow')
-col1.subheader(f'Meta: {fmt_num(meta)}',divider='rainbow')
+col1.subheader(f'Meta: {fmt_num(meta)}')
 if resultado-meta > 0:
-   col1.subheader(f'Dif: :red[{fmt_num(resultado-meta)}]',divider='rainbow') 
+   col1.subheader(f'Dif: :red[{fmt_num(resultado-meta)}]') 
 else:
-    col1.subheader(f'Dif: :green[{fmt_num(resultado-meta)}]',divider='rainbow')
+    col1.subheader(f'Dif: :green[{fmt_num(resultado-meta)}]')
 col1.subheader(f"Lotes para Faturar: " + str(lote_faturar))
 col1.dataframe(data=status, hide_index=True)
 
