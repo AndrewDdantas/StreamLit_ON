@@ -33,7 +33,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(
     json, scope)
 client = gs.authorize(credentials)
 
-sheet = client.open_by_key('1gPbStQWesvP3SyUB9r3RmiqHTKncrfFoOlCo_kzaRMU')
+sheet = client.open_by_key(st.secrets['preventivo'])
 worksheet = sheet.worksheet('Base SQL')
 
 
