@@ -100,7 +100,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(
 client = gs.authorize(credentials)
 
 # Baixando informações da grade
-planilha = client.open_by_key('13ZBSdVjqRsQQwE8a6abpi99myjo72w1ife-vjUrzMCs') 
+planilha = client.open_by_key(st.secrets['grade']) 
 grade = planilha.worksheet('Dados_consolidado_2023')
 dados_grade = grade.get_values('b3:l')
 dados_grade = pd.DataFrame(dados_grade)
@@ -113,7 +113,7 @@ dados_grade['DTPROGRAMACAO'] = dados_grade['DTPROGRAMACAO'] + '/2024'
 dados_grade['DTPROGRAMACAO'] = pd.to_datetime(dados_grade['DTPROGRAMACAO'], format='%d/%m/%Y')
 dados_grade = dados_grade.sort_values('DTPROGRAMACAO')
 
-BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
+BASE_STREAMLIT = client.open_by_key(st.secrets['bases']) 
 base = BASE_STREAMLIT.worksheet('STATUS_OPERAÇÃO')
 base = base.get_values('A2:N')
 wis = pd.DataFrame(base)
@@ -197,7 +197,6 @@ st.pyplot(fig)
 base = BASE_STREAMLIT.worksheet('PRODUÇÃO_TURNO')
 base = base.get_values('A2:F')
 wis_turno = pd.DataFrame(base)
-#wis_turno = pd.read_csv('https://redash-inteligencia-comercial.luizalabs.com/api/queries/3308/results.csv?api_key=GMn4FZUYx3uiUueVl9Xc5ZPtEXTM5d0sliwI0dkg')
 wis_turno.columns = ['DT_COMPETENCIA','LOTE','TURNO','QT_SEPARADO','CUBAGEM','HORA']
 wis_turno['LOTE'] = wis_turno['LOTE'].astype(str)
 wis_turno[['QT_SEPARADO','CUBAGEM']] = wis_turno[['QT_SEPARADO','CUBAGEM']].apply(lambda x: x.str.replace(',','.')).astype(float)
