@@ -34,7 +34,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(
     json, scope)
 client = gs.authorize(credentials)
 
-BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
+BASE_STREAMLIT = client.open_by_key(st.secrets['bases']) 
 portaria_controle = BASE_STREAMLIT.worksheet('PORTARIA CONTROLE')
 
 portaria_controle.columns = ['DTPROGRAMACAO','IDCARGA','ROTA_MASTER','STATUS PRODUÇÃO','DOCA','OFERECIMENTO','STATUS MOTORISTA','Observação']
