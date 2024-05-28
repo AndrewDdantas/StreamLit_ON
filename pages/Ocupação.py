@@ -42,7 +42,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(
     json, scope)
 client = gs.authorize(credentials)
 
-BASE_STREAMLIT = client.open_by_key('19wq-kacGtgwRS8ZMUpDofA4rpOEMO4r_1SGBtcc7oxM') 
+BASE_STREAMLIT = client.open_by_key(st.secrets['bases']) 
 ocupação = BASE_STREAMLIT.worksheet('OCUPAÇÃO 2650').get_all_values()
 db = pd.DataFrame(ocupação[1:], columns=ocupação[0])
 
