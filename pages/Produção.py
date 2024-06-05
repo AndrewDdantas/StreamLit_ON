@@ -173,7 +173,7 @@ while i <= len(data_dist):
     term(ax3, te['CUB_SEPARADA'].sum(), te['CUB_PROGRAMADA'].sum(), data_dist[i-1])
 
     
-    pecas = te[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']]
+    pecas = te[['DT_PROG', 'OFERE', 'PROG', 'SEPARADO', 'PEN_PEÇAS']]
     pecas["%"] = pecas['SEPARADO'] / pecas['PROGRAMACAO']
     pecas.loc[:, '%'] = pecas['%'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
