@@ -174,11 +174,15 @@ while i <= len(data_dist):
 
     
     pecas = te[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']]
+    pecas["%"] = pecas['SEPARADO'] / pecas['PROGAMACAO']
+    pecas.loc[:, '%'] = pecas['%'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'PEN_PEÇAS'] = pecas['PEN_PEÇAS'].apply(fmt_num, tipo='NORMAL')
 
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA', 'PEN_CUB']]
+    cubagem['%'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
+    cubagem.loc[:, '%'] = cubagem['%'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, 'CUB_SEPARADA'] = cubagem['CUB_SEPARADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, 'PEN_CUB'] = cubagem['PEN_CUB'].apply(fmt_num, tipo='CUBAGEM', casas=2)
