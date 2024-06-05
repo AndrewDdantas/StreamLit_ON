@@ -174,7 +174,7 @@ while i <= len(data_dist):
 
     
     pecas = te[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO', 'PEN_PEÇAS']]
-    pecas["%"] = pecas['SEPARADO'] / pecas['PROGAMACAO']
+    pecas["%"] = pecas['SEPARADO'] / pecas['PROGRAMACAO']
     pecas.loc[:, '%'] = pecas['%'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
