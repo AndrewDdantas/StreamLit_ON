@@ -140,7 +140,7 @@ pendente = pendente['DTPROGRAMACAO'].sort_values().unique()
 hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'ID_CARGA':'nunique', 'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CONFERIDO':'sum', 'CUB_SEPARADA':'sum','CUB_CONFERIDA':'sum'}).reset_index()
 hr = hr.loc[hr['DTPROGRAMACAO'].isin(pendente)]
 hr['OFERECIMENTO'] = hr['DTOFERECIMENTO'] +' '+hr['HROFERECIMENTO']
-hr = hr[['DTPROGRAMACAO','OFERECIMENTO', 'PROGRAMACAO', 'CUB_PROGRAMADA', 'SEPARADO', 'CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA']]
+hr = hr[['DTPROGRAMACAO','ID_CARGA','OFERECIMENTO', 'PROGRAMACAO', 'CUB_PROGRAMADA', 'SEPARADO', 'CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA']]
 hr['OFERECIMENTO'] = pd.to_datetime(hr['OFERECIMENTO'], format='%d/%m/%Y %H:%M')
 hr = hr.sort_values('OFERECIMENTO')
 hr['OFERECIMENTO'] = hr['OFERECIMENTO'].dt.time
