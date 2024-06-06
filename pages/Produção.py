@@ -37,7 +37,6 @@ def term(ax, atual, alvo, data):
             ha='center', va='center', fontsize=30)
 
 def table(ax, dados):
-def table(ax, dados):
     ax.axis('off')
     tabela = ax.table(cellText=dados.values, colLabels=dados.columns, loc='upper left')
     tabela.auto_set_font_size(False)
