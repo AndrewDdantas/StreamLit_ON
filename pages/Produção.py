@@ -181,7 +181,7 @@ while i <= len(data_dist):
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
     pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','% SEP','CONFERIDO','% CONF']]
-    pecas.columns = ['DT_PROG', 'OFEREC', 'PROGAM', 'SEP', '% SEP', 'CONF','% CONF']
+    pecas.columns = ['DT_PROG', 'OFEREC', 'PEÇAS_PROG', 'SEPARADO', '% SEP', 'CONFERIDO','% CONF']
 
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA','CUB_CONFERIDA']]
     cubagem['% SEP'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
