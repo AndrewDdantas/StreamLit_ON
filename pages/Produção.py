@@ -124,6 +124,12 @@ wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERI
 
 join_dados = pd.merge(wis,dados_grade,how="inner", on="LOTE")
 
+privatizacao = BASE_STREAMLIT.worksheet('PRIORIZAÇÃO')
+privatizacao = privatizacao.get_values('a1:ac')
+privatizacao = pd.DataFrame(privatizacao[1:], columns=privatizacao[0]) 
+
+
+
     
 def definir_status(row):
     if row['STATUS'] == '7. Carreg. Finalizado' or row['PROGRAMACAO'] - row['CONFERIDO'] <= 0 or row['STATUS'] == '7. Carreg. Finalizado': 
