@@ -137,12 +137,13 @@ pendente = join_dados[join_dados['STATUS_AJUSTADO'] == 'PENDENTE']
 
 pendente = pendente['DTPROGRAMACAO'].sort_values().unique()
 
-hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CUB_SEPARADA':'sum'}).reset_index()
+hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CONFERIDO':'sum', 'CUB_SEPARADA':'sum','CUB_CONFERIDA':'sum'}).reset_index()
 hr = hr.loc[hr['DTPROGRAMACAO'].isin(pendente)]
 hr['OFERECIMENTO'] = hr['DTOFERECIMENTO'] +' '+hr['HROFERECIMENTO']
 hr['PEN_PEÇAS'] = hr['PROGRAMACAO'] - hr['SEPARADO']
 hr['PEN_CUB'] = hr['CUB_PROGRAMADA'] - hr['CUB_SEPARADA']
-hr = hr[['DTPROGRAMACAO','OFERECIMENTO', 'PROGRAMACAO', 'CUB_PROGRAMADA', 'SEPARADO', 'CUB_SEPARADA', 'PEN_PEÇAS', 'PEN_CUB']]
+hr['PEN_CUB_CONF'] = hr['CUB_PROGRAMADA'] - hr['CUB_CONFERIDA']
+hr = hr[['DTPROGRAMACAO','OFERECIMENTO', 'PROGRAMACAO', 'CUB_PROGRAMADA', 'SEPARADO', 'CUB_SEPARADA', 'PEN_PEÇAS', 'PEN_CUB','CUB_CONFERIDA','PEN_CUB_CONF']]
 hr['OFERECIMENTO'] = pd.to_datetime(hr['OFERECIMENTO'], format='%d/%m/%Y %H:%M')
 hr = hr.sort_values('OFERECIMENTO')
 hr['OFERECIMENTO'] = hr['OFERECIMENTO'].dt.time
