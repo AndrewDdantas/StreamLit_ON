@@ -172,7 +172,7 @@ while i <= len(data_dist):
     term(ax3, te['CUB_SEPARADA'].sum(), te['CUB_PROGRAMADA'].sum(), data_dist[i-1])
 
     
-    pecas = te[['DTPROGRAMACAO', 'ID_CARGA','OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','CONFERIDO']]
+    pecas = te[['DTPROGRAMACAO','ID_CARGA','OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','CONFERIDO']]
     pecas["% SEP"] = pecas['SEPARADO'] / pecas['PROGRAMACAO']
     pecas["% CONF"] = pecas['CONFERIDO'] / pecas['PROGRAMACAO']
     
@@ -180,7 +180,7 @@ while i <= len(data_dist):
     pecas.loc[:, '% CONF'] = pecas['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
-    pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','% SEP','CONFERIDO','% CONF']]
+    pecas = pecas[['DTPROGRAMACAO', 'ID_CARGA','OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','% SEP','CONFERIDO','% CONF']]
     pecas.columns = ['DT_PROG', 'CARGAS','OFEREC', 'PEÇAS_PROG', 'SEPARADO', '% SEP', 'CONFERIDO','% CONF']
 
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA','CUB_CONFERIDA']]
