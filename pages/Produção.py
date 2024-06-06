@@ -184,11 +184,13 @@ while i <= len(data_dist):
     pecas.columns = ['DT_PROG', 'OFEREC', 'PROGAM', 'SEP', 'PEN_PEÇAS', '%']
 
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA','CUB_CONFERIDA']]
-    cubagem['%'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
+    cubagem['% SEP'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
+    cubagem['% CONF'] = cubagem['CUB_CONFERIDA'] / cubagem['CUB_PROGRAMADA']
     cubagem.loc[:, 'CUB_CONFERIDA'] = cubagem['CUB_CONFERIDA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, '%'] = cubagem['%'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, 'CUB_SEPARADA'] = cubagem['CUB_SEPARADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
+    cubagem = cubagem[['CUB_PROGRAMADA', 'CUB_SEPARADA','% SEP','CUB_CONFERIDA','% CONF']]
 
     table(ax2, pecas)
     table(ax4, cubagem)
