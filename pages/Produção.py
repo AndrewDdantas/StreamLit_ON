@@ -187,7 +187,7 @@ while i <= len(data_dist):
     cubagem['% SEP'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
     cubagem['% CONF'] = cubagem['CUB_CONFERIDA'] / cubagem['CUB_PROGRAMADA']
     cubagem.loc[:, 'CUB_CONFERIDA'] = cubagem['CUB_CONFERIDA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
-    cubagem.loc[:, '% SEP'] = cubagem['% SEP''].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
+    cubagem.loc[:, '% SEP'] = cubagem['% SEP'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, '% CONF'] = cubagem['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, 'CUB_SEPARADA'] = cubagem['CUB_SEPARADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
