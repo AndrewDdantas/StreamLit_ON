@@ -140,9 +140,6 @@ pendente = pendente['DTPROGRAMACAO'].sort_values().unique()
 hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CONFERIDO':'sum', 'CUB_SEPARADA':'sum','CUB_CONFERIDA':'sum'}).reset_index()
 hr = hr.loc[hr['DTPROGRAMACAO'].isin(pendente)]
 hr['OFERECIMENTO'] = hr['DTOFERECIMENTO'] +' '+hr['HROFERECIMENTO']
-hr['PEN_PEÇAS'] = hr['PROGRAMACAO'] - hr['SEPARADO']
-hr['PEN_CUB'] = hr['CUB_PROGRAMADA'] - hr['CUB_SEPARADA']
-hr['PEN_CUB_CONF'] = hr['CUB_PROGRAMADA'] - hr['CUB_CONFERIDA']
 hr = hr[['DTPROGRAMACAO','OFERECIMENTO', 'PROGRAMACAO', 'CUB_PROGRAMADA', 'SEPARADO', 'CUB_SEPARADA', 'PEN_PEÇAS','CONFERIDO', 'PEN_CUB','CUB_CONFERIDA','PEN_CUB_CONF']]
 hr['OFERECIMENTO'] = pd.to_datetime(hr['OFERECIMENTO'], format='%d/%m/%Y %H:%M')
 hr = hr.sort_values('OFERECIMENTO')
@@ -183,7 +180,6 @@ while i <= len(data_dist):
     pecas.loc[:, '% CONF'] = pecas['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
-    pecas.loc[:, 'PEN_PEÇAS'] = pecas['PEN_PEÇAS'].apply(fmt_num, tipo='NORMAL')
     pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','% SEP','CONFERIDO','% CONF']]
     pecas.columns = ['DT_PROG', 'OFEREC', 'PROGAM', 'SEP', '% SEP', 'CONF','% CONF']
 
