@@ -126,7 +126,7 @@ join_dados = pd.merge(wis,dados_grade,how="inner", on="LOTE")
 
     
 def definir_status(row):
-    if row['STATUS'] == '7. Carreg. Finalizado' or row['PROGRAMACAO'] - row['SEPARADO'] <= 0 or row['STATUS'] == '7. Carreg. Finalizado': 
+    if row['STATUS'] == '7. Carreg. Finalizado' or row['PROGRAMACAO'] - row['CONFERIDO'] <= 0 or row['STATUS'] == '7. Carreg. Finalizado': 
         return 'SEPARADO'
     else:
         return 'PENDENTE'
