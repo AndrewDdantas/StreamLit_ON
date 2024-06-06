@@ -137,7 +137,7 @@ pendente = join_dados[join_dados['STATUS_AJUSTADO'] == 'PENDENTE']
 
 pendente = pendente['DTPROGRAMACAO'].sort_values().unique()
 
-hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CONFERIDO':'sum', 'CUB_SEPARADA':'sum','CUB_CONFERIDA':'sum'}).reset_index()
+hr = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO']).agg({'ID_CARGA':'nunique', 'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CONFERIDO':'sum', 'CUB_SEPARADA':'sum','CUB_CONFERIDA':'sum'}).reset_index()
 hr = hr.loc[hr['DTPROGRAMACAO'].isin(pendente)]
 hr['OFERECIMENTO'] = hr['DTOFERECIMENTO'] +' '+hr['HROFERECIMENTO']
 hr = hr[['DTPROGRAMACAO','OFERECIMENTO', 'PROGRAMACAO', 'CUB_PROGRAMADA', 'SEPARADO', 'CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA']]
@@ -172,7 +172,7 @@ while i <= len(data_dist):
     term(ax3, te['CUB_SEPARADA'].sum(), te['CUB_PROGRAMADA'].sum(), data_dist[i-1])
 
     
-    pecas = te[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','CONFERIDO']]
+    pecas = te[['DTPROGRAMACAO', 'ID_CARGA','OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','CONFERIDO']]
     pecas["% SEP"] = pecas['SEPARADO'] / pecas['PROGRAMACAO']
     pecas["% CONF"] = pecas['CONFERIDO'] / pecas['PROGRAMACAO']
     
@@ -181,7 +181,7 @@ while i <= len(data_dist):
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
     pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'PROGRAMACAO', 'SEPARADO','% SEP','CONFERIDO','% CONF']]
-    pecas.columns = ['DT_PROG', 'OFEREC', 'PEÇAS_PROG', 'SEPARADO', '% SEP', 'CONFERIDO','% CONF']
+    pecas.columns = ['DT_PROG', 'CARGAS','OFEREC', 'PEÇAS_PROG', 'SEPARADO', '% SEP', 'CONFERIDO','% CONF']
 
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA','CUB_CONFERIDA']]
     cubagem['% SEP'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
