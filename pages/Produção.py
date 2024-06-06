@@ -183,7 +183,7 @@ while i <= len(data_dist):
     pecas.loc[:, 'PEN_PEÇAS'] = pecas['PEN_PEÇAS'].apply(fmt_num, tipo='NORMAL')
     pecas.columns = ['DT_PROG', 'OFEREC', 'PROGAM', 'SEP', 'PEN_PEÇAS', '%']
 
-    cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA', 'PEN_CUB']]
+    cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA', 'PEN_CUB','CUB_CONFERIDA']]
     cubagem['%'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
     cubagem.loc[:, '%'] = cubagem['%'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
