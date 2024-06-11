@@ -124,9 +124,10 @@ wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERI
 
 join_dados = pd.merge(wis,dados_grade,how="inner", on="LOTE")
 
-privatizacao = BASE_STREAMLIT.worksheet('PRIORIZAÇÃO')
-privatizacao = privatizacao.get_values('a1:ac')
-privatizacao = pd.DataFrame(privatizacao[1:], columns=privatizacao[0]) 
+priorizacao = BASE_STREAMLIT.worksheet('PRIORIZAÇÃO')
+priorizacao = priorizacao.get_values('a1:ac')
+priorizacao = pd.DataFrame(priorizacao[1:], columns=priorizacao[0]) 
+priorizacao = pd.pivot_table(priorizacao,'VARIAVEL', ['DT_CARREGAMENTO_PCP','DOCAS'],['DS_APLICACAO','PRIORIZADO'], 'nunique')
 
 
 
@@ -342,3 +343,4 @@ ba['Pendente'] = ba['PROGRAMACAO'] - ba['SEPARADO']
 ba = ba.loc[ba['Pendente'] > 0]
 
 st.dataframe(ba)
+st.dataframe(priorizacao)
