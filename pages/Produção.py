@@ -160,7 +160,7 @@ if len(data_dist) > 3:
     tea = 25+v
 else:
     tea = 20+v
-fig = plt.figure(figsize=(27, tea))
+fig = plt.figure(figsize=(35, tea))
 
 
 i = 1
@@ -195,12 +195,15 @@ while i <= len(data_dist):
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA','CUB_CONFERIDA']]
     cubagem['% SEP'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
     cubagem['% CONF'] = cubagem['CUB_CONFERIDA'] / cubagem['CUB_PROGRAMADA']
+    cubagem['PEND SEP'] = cubagem['CUB_PROGRAMADA'] - cubagem['CUB_SEPARADA']
+    cubagem['PEND CONF'] = cubagem['CUB_PROGRAMADA'] - cubagem['CUB_CONFERIDA'] 
+    
     cubagem.loc[:, 'CUB_CONFERIDA'] = cubagem['CUB_CONFERIDA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, '% SEP'] = cubagem['% SEP'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, '% CONF'] = cubagem['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, 'CUB_SEPARADA'] = cubagem['CUB_SEPARADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
-    cubagem = cubagem[['CUB_PROGRAMADA', 'CUB_SEPARADA','% SEP','CUB_CONFERIDA','% CONF']]
+    cubagem = cubagem[['CUB_PROGRAMADA', 'CUB_SEPARADA','PEND SEP','% SEP','CUB_CONFERIDA','PEND CONF','% CONF']]
 
     table(ax2, pecas)
     table(ax4, cubagem)
