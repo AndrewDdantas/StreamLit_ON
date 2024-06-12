@@ -203,6 +203,8 @@ while i <= len(data_dist):
     cubagem.loc[:, '% CONF'] = cubagem['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     cubagem.loc[:, 'CUB_PROGRAMADA'] = cubagem['CUB_PROGRAMADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, 'CUB_SEPARADA'] = cubagem['CUB_SEPARADA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
+    cubagem.loc[:, 'PEND SEP'] = cubagem['PEND SEP'].apply(fmt_num, tipo='CUBAGEM', casas=2)
+    cubagem.loc[:, 'PEND CONF'] = cubagem['PEND CONF'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem = cubagem[['CUB_PROGRAMADA', 'CUB_SEPARADA','PEND SEP','% SEP','CUB_CONFERIDA','PEND CONF','% CONF']]
 
     table(ax2, pecas)
