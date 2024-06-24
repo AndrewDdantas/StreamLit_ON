@@ -102,7 +102,7 @@ client = gs.authorize(credentials)
 
 # Baixando informações da grade
 planilha = client.open_by_key(st.secrets['grade']) 
-grade = planilha.worksheet('Dados_consolidado_2023')
+grade = planilha.worksheet('Dados_consolidado')
 dados_grade = grade.get_values('b3:k')
 dados_grade = pd.DataFrame(dados_grade)
 dados_grade.columns = ['DTPROGRAMACAO', 'STATUS', 'OPERACAO', 'ID_CARGA', 'DTOFERECIMENTO', 'HROFERECIMENTO', 'FILIAL',
