@@ -84,8 +84,6 @@ lote_faturar = lot_faturar['NUMLOTE'].nunique()
 resultado = carteira_vendas['VALTOTAL'].sum()
 meta = 1089000
 
-#fechamento[0] = 'D:' + fechamento[0].str.split('-').str[2].str.split(' ').str[0] + ' H:' + fechamento[0].str.split('-').str[2].str.split(' ').str[1]
-
 
 col1, col2, col3 = st.columns(3)
 col1.subheader(f'Resultado: {fmt_num(resultado)}')
