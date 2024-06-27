@@ -132,7 +132,7 @@ priorizacao = pd.pivot_table(priorizacao,'VARIAVEL', ['DT_CARREGAMENTO_PCP','DOC
 
     
 def definir_status(row):
-    if row['STATUS'] == '7. Carreg. Finalizado' or row['PROGRAMACAO'] - row['CONFERIDO'] <= 0 or row['STATUS'] == '7. Carreg. Finalizado': 
+    if row['PROGRAMACAO'] - row['CONFERIDO'] <= 0: 
         return 'SEPARADO'
     else:
         return 'PENDENTE'
