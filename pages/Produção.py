@@ -127,10 +127,7 @@ priorizacao = BASE_STREAMLIT.worksheet('PRIORIZAÇÃO')
 priorizacao = priorizacao.get_values('a1:ac')
 priorizacao = pd.DataFrame(priorizacao[1:], columns=priorizacao[0]) 
 priorizacao = pd.pivot_table(priorizacao,'VARIAVEL', ['DT_CARREGAMENTO_PCP','DOCAS'],['DS_APLICACAO','PRIORIZADO'], 'nunique')
-
-
-
-    
+  
 def definir_status(row):
     if row['PROGRAMACAO'] - row['CONFERIDO'] <= 0: 
         return 'SEPARADO'
