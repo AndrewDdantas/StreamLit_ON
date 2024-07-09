@@ -129,15 +129,25 @@ chart = (chart + text).configure_view(
 col2.altair_chart(chart)
 
 col11, col12 = col1.columns(2)
-col11.write( f'Peças Separadas: {fmt_num(df['SEPARADO'].sum(), 'NORMAL')}')
-col11.write( f'Cubagem Separada: {fmt_num(df['CUB_SEPARADA'].sum(),'CUBAGEM', 2)}')
-col12.write( f'{fmt_num(df['SEPARADO'].sum()/df['PECAS'].sum(), 'PORCENTAGEM', 2)}')
-col12.write( f'{fmt_num(df['CUB_SEPARADA'].sum()/df['CUBAGEM'].sum(), 'PORCENTAGEM', 2)}')
 
-col11.write( f'Peças Conferidas: {fmt_num(df['CONFERIDO'].sum(), 'NORMAL')}')
-col11.write( f'Cubagem Conferida: {fmt_num(df['CUB_CONFERIDA'].sum(),'CUBAGEM', 2)}')
-col12.write( f'{fmt_num(df['CONFERIDO'].sum()/df['PECAS'].sum(), 'PORCENTAGEM', 2)}')
-col12.write( f'{fmt_num(df['CUB_CONFERIDA'].sum()/df['CUBAGEM'].sum(), 'PORCENTAGEM', 2)}')
+ps = fmt_num(df['SEPARADO'].sum(), 'NORMAL')
+cs = fmt_num(df['CUB_SEPARADA'].sum(),'CUBAGEM', 2)
+psp = fmt_num(df['SEPARADO'].sum()/df['PECAS'].sum(), 'PORCENTAGEM', 2)
+csp = fmt_num(df['CUB_SEPARADA'].sum()/df['CUBAGEM'].sum(), 'PORCENTAGEM', 2)
+col11.write( f'Peças Separadas: {ps}')
+col11.write( f'Cubagem Separada: {cs}')
+col12.write( f'{psp}')
+col12.write( f'{csp}')
+
+pc = fmt_num(df['CONFERIDO'].sum(), 'NORMAL')
+cc = fmt_num(df['CUB_CONFERIDA'].sum(),'CUBAGEM', 2)
+pcs = fmt_num(df['CONFERIDO'].sum()/df['PECAS'].sum(), 'PORCENTAGEM', 2)
+ccs = fmt_num(df['CUB_CONFERIDA'].sum()/df['CUBAGEM'].sum(), 'PORCENTAGEM', 2)
+
+col11.write( f'Peças Conferidas: {pc}')
+col11.write( f'Cubagem Conferida: {cc}')
+col12.write( f'{pcs}')
+col12.write( f'{ccs}')
 try:
     docas = df.loc[df['STATUS_LOTE'] == 'EM PRODUCAO']
     docas['DOCA'] = docas['DOCA'].apply(lambda x: str(x)[:1] if len(str(x)) > 3 else str(x)[:2])
