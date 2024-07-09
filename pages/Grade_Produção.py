@@ -84,9 +84,10 @@ if status != '':
 
 
 
-
-col1.subheader( f'Planejado Peças: {fmt_num(df['PECAS'].sum(), 'NORMAL')}')
-col1.subheader( f'Planejado Cubagem: {fmt_num(df['CUBAGEM'].sum(),'CUBAGEM', 2)}')
+pec = fmt_num(df['PECAS'].sum(), 'NORMAL')
+cub = fmt_num(df['CUBAGEM'].sum(),'CUBAGEM', 2)
+col1.subheader( f'Planejado Peças: {pec}')
+col1.subheader( f'Planejado Cubagem: {cub}')
 
 
 df_rosca = pd.DataFrame({
@@ -110,7 +111,8 @@ chart = alt.Chart(df_rosca).mark_arc(innerRadius=70).encode(
     title="Distribuição de Valores por produção"
 )
 
-text = alt.Chart(pd.DataFrame({'text': [f'{int(df["CONFERIDO"].sum() / df["PECAS"].sum() * 100)}%']})).mark_text(
+gra = int(df["CONFERIDO"].sum() / df["PECAS"].sum() * 100)
+text = alt.Chart(pd.DataFrame({'text': [f'{gra}%']})).mark_text(
     size=30,
     align='center',
     baseline='middle',
