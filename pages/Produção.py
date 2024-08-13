@@ -183,7 +183,6 @@ while i <= len(data_dist):
     total_pecas = pecas[['ID_CARGA','PROGRAMACAO', 'SEPARADO','CONFERIDO']].sum()
     media_pecas = pecas[["% SEP","% CONF"]].mean()
     st.write(total_pecas)
-    st.write(total_id)
     st.write(media_pecas)
 
     
