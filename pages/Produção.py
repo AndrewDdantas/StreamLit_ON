@@ -47,7 +47,7 @@ def table(ax, dados):
 
     for (i,j), cell in tabela._cells.items():
         cell.get_text().set_ha('center')
-        if i == 0 or i == len(tabela.get_celld()) // tabela.get_celld()[0].get_height():
+        if i == 0 or i == len(tabela.get_celld()):
             cell.set_fontsize(14)
             cell.set_text_props(weight='bold', color='w')
             cell.set_facecolor('#00B0F0')
