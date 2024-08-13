@@ -183,7 +183,7 @@ while i <= len(data_dist):
     media_pecas = pecas[["% SEP","% CONF"]].mean()
 
     total_row = pd.DataFrame([['Total']+['-'] + total_pecas.tolist()+media_pecas.tolist()])
-    total_row = total_row[[0,1,2,3,4,5,8,6,7,9]]
+    total_row = total_row[[0,1,2,3,4,6,8,5,7,9]]
     total_row.columns = ['DTPROGRAMACAO','OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']
 
     pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']]
