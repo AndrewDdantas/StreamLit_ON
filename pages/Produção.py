@@ -195,13 +195,19 @@ while i <= len(data_dist):
     pecas.loc[:, 'PROGRAMACAO'] = pecas['PROGRAMACAO'].apply(fmt_num, tipo='NORMAL')
     pecas.loc[:, 'SEPARADO'] = pecas['SEPARADO'].apply(fmt_num, tipo='NORMAL')
     
-    #pecas.columns = ['DT_PROG', 'OFEREC',  'CARGAS','PEÇAS_PROG', 'SEPARADO', 'PEND SEP','% SEP', 'CONFERIDO','PEND CONF','% CONF']
+    pecas.columns = ['DT_PROG', 'OFEREC',  'CARGAS','PEÇAS_PROG', 'SEPARADO', 'PEND SEP','% SEP', 'CONFERIDO','PEND CONF','% CONF']
 
     cubagem = te[['CUB_PROGRAMADA', 'CUB_SEPARADA','CUB_CONFERIDA']]
     cubagem['% SEP'] = cubagem['CUB_SEPARADA'] / cubagem['CUB_PROGRAMADA']
     cubagem['% CONF'] = cubagem['CUB_CONFERIDA'] / cubagem['CUB_PROGRAMADA']
     cubagem['PEND SEP'] = cubagem['CUB_PROGRAMADA'] - cubagem['CUB_SEPARADA']
     cubagem['PEND CONF'] = cubagem['CUB_PROGRAMADA'] - cubagem['CUB_CONFERIDA'] 
+    cubagem_total = cubagem[['CUB_PROGRAMADA', 'CUB_SEPARADA','PEND SEP','CUB_CONFERIDA','PEND CONF']].sum()
+    cubagem_media = cubagem[['% SEP','% CONF']].mean()
+    cubagem_row = pd.DataFrame([cubagem_total.tolist()+cubagem_media.tolist()])
+    cubagem_row = cubagem_row[[0,1,2,5,3,4,6]]
+    cubagem_row.columns = ['CUB_PROGRAMADA', 'CUB_SEPARADA','PEND SEP','% SEP','CUB_CONFERIDA','PEND CONF','% CONF']
+    cubagem = pd.concat([cubagem,cubagem_row], ignore_index=True)
     
     cubagem.loc[:, 'CUB_CONFERIDA'] = cubagem['CUB_CONFERIDA'].apply(fmt_num, tipo='CUBAGEM', casas=2)
     cubagem.loc[:, '% SEP'] = cubagem['% SEP'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
