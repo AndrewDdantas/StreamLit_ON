@@ -45,7 +45,7 @@ def table(ax, dados):
     tabela.scale(1,3)
     ax.set_ylim(-10000, 100000)
 
-    for (i,j), cell in tabela._cells.items():
+    for (i,j), cell in max(key[0] for key in tabela._cells.keys()):
         cell.get_text().set_ha('center')
         if i == 0 or i == len(tabela.get_celld()):
             cell.set_fontsize(14)
