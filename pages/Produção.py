@@ -180,6 +180,14 @@ while i <= len(data_dist):
     pecas["% CONF"] = pecas['CONFERIDO'] / pecas['PROGRAMACAO']
     pecas['PEND SEP'] = pecas['PROGRAMACAO'] - pecas['SEPARADO'] 
     pecas['PEND CONF'] = pecas['PROGRAMACAO'] - pecas['CONFERIDO']
+    total_pecas = pecas[['PROGRAMACAO', 'SEPARADO','CONFERIDO']].sum()
+    total_id = pecas[['ID_CARGA']].nunique()
+    media_pecas = pecas[["% SEP","% CONF"]].mean()
+    st.write(total_pecas)
+    st.write(total_id)
+    st.write(media_pecas)
+
+    
     
     pecas.loc[:, '% SEP'] = pecas['% SEP'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, '% CONF'] = pecas['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
