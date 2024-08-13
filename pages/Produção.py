@@ -183,12 +183,12 @@ while i <= len(data_dist):
     total_pecas = pecas[['ID_CARGA','PROGRAMACAO', 'SEPARADO','CONFERIDO','PEND SEP','PEND CONF']].sum()
     media_pecas = pecas[["% SEP","% CONF"]].mean()
 
-    total_row = pd.DataFrame([['-'] + total_pecas.tolist()+media_pecas.tolist()])
-    total_row = total_row[[0,1,2,3,4,7,5,6,8]]
-    total_row.columns = ['OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']
+    total_row = pd.DataFrame([['Total']+['-'] + total_pecas.tolist()+media_pecas.tolist()])
+    total_row = total_row[[0,1,2,3,4,5,8,6,7,9]]
+    total_row.columns = ['DTPROGRAMACAO','OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']
 
     pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']]
-    pecas.loc['Total'] = total_row
+    pecas = pd.concat(pecas,total_row, ignore_index=True)
     
     pecas.loc[:, '% SEP'] = pecas['% SEP'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, '% CONF'] = pecas['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
