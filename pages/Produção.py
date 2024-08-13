@@ -180,10 +180,11 @@ while i <= len(data_dist):
     pecas["% CONF"] = pecas['CONFERIDO'] / pecas['PROGRAMACAO']
     pecas['PEND SEP'] = pecas['PROGRAMACAO'] - pecas['SEPARADO'] 
     pecas['PEND CONF'] = pecas['PROGRAMACAO'] - pecas['CONFERIDO']
-    total_pecas = pecas[['ID_CARGA','PROGRAMACAO', 'SEPARADO','CONFERIDO']].sum()
+    total_pecas = pecas[['ID_CARGA','PROGRAMACAO', 'SEPARADO','CONFERIDO','PEND SEP','PEND CONF']].sum()
     media_pecas = pecas[["% SEP","% CONF"]].mean()
-    st.write(total_pecas)
-    st.write(media_pecas)
+
+    total_row = pd.DataFrame(['Total']+['-'] + total_pecas.tolist()+media_pecas.tolist()]
+    st.write(total_row)
 
     
     
