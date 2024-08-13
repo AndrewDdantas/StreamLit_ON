@@ -44,10 +44,9 @@ def table(ax, dados):
     tabela.set_fontsize(14)
     tabela.scale(1,3)
     ax.set_ylim(-10000, 100000)
-
-    for (i,j), cell in max(key[0] for key in tabela._cells.keys()):
+    for (i,j), cell in tabela._cells.items():
         cell.get_text().set_ha('center')
-        if i == 0 or i == len(tabela.get_celld()):
+        if i == 0 or i ==  max(key[0] for key in tabela._cells.keys()):
             cell.set_fontsize(14)
             cell.set_text_props(weight='bold', color='w')
             cell.set_facecolor('#00B0F0')
