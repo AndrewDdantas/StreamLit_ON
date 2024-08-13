@@ -188,7 +188,7 @@ while i <= len(data_dist):
     total_row.columns = ['DTPROGRAMACAO','OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']
 
     pecas = pecas[['DTPROGRAMACAO', 'OFERECIMENTO', 'ID_CARGA', 'PROGRAMACAO', 'SEPARADO','PEND SEP','% SEP','CONFERIDO','PEND CONF','% CONF']]
-    pecas = pd.concat(pecas,total_row, ignore_index=True)
+    pecas = pd.concat([pecas,total_row], ignore_index=True)
     
     pecas.loc[:, '% SEP'] = pecas['% SEP'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
     pecas.loc[:, '% CONF'] = pecas['% CONF'].apply(fmt_num, tipo='PORCENTAGEM', casas=1)
