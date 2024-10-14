@@ -134,3 +134,7 @@ colun2.write('Modais por Filial Cubagem.')
 colun2.dataframe(dinamica_cub)
 colun3.write('Cidades CD Entrega')
 colun3.dataframe(cd_entrega, hide_index=True)
+
+
+st.components.v1.iframe("https://web.whatsapp.com/", height=400, scrolling=True)
+
