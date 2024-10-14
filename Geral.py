@@ -136,5 +136,5 @@ colun3.write('Cidades CD Entrega')
 colun3.dataframe(cd_entrega, hide_index=True)
 
 
-st.components.v1.iframe("https://web.whatsapp.com/", height=400, scrolling=True)
+st.components.v1.iframe("https://app.powerbi.com/groups/me/reports/ca30cd3b-a983-46db-91ae-56d86c65c6ba/3db1b7284577c39287d3?experience=power-bi", height=400, scrolling=True)
 
