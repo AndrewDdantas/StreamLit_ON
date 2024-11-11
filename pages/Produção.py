@@ -116,7 +116,7 @@ BASE_STREAMLIT = client.open_by_key(st.secrets['bases'])
 base = BASE_STREAMLIT.worksheet('STATUS_OPERAÇÃO')
 base = base.get_values('A2:N')
 wis = pd.DataFrame(base)
-wis.columns = ['DATA_CORTE','LOTE','PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']
+wis.columns = ['DATA_CORTE','LOTE','PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','CD_SITUACAO','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']
 wis['LOTE'] = wis['LOTE'].astype(str)
 wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']] = wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']].apply(lambda x: x.str.replace(',','.')).astype(float)
 
@@ -128,7 +128,7 @@ priorizacao = pd.DataFrame(priorizacao[1:], columns=priorizacao[0])
 priorizacao = pd.pivot_table(priorizacao,'VARIAVEL', ['DT_CARREGAMENTO_PCP','DOCAS'],['DS_APLICACAO','PRIORIZADO'], 'nunique')
   
 def definir_status(row):
-    if row['PROGRAMACAO'] - row['CONFERIDO'] <= 0: 
+    if (row['PROGRAMACAO'] - row['CONFERIDO'] <= 0) or (row['CD_SITUACAO'] in [60, 68]):
         return 'SEPARADO'
     else:
         return 'PENDENTE'
