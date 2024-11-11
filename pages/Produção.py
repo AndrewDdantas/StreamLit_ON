@@ -128,7 +128,7 @@ priorizacao = pd.DataFrame(priorizacao[1:], columns=priorizacao[0])
 priorizacao = pd.pivot_table(priorizacao,'VARIAVEL', ['DT_CARREGAMENTO_PCP','DOCAS'],['DS_APLICACAO','PRIORIZADO'], 'nunique')
   
 def definir_status(row):
-    if (row['PROGRAMACAO'] - row['CONFERIDO'] <= 0) or (row['CD_SITUACAO'] in [60, 68]):
+    if (row['PROGRAMACAO'] - row['CONFERIDO'] <= 0) or (row['CD_SITUACAO'] in ['60', '68']):
         return 'SEPARADO'
     else:
         return 'PENDENTE'
