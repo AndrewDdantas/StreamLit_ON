@@ -121,11 +121,6 @@ wis['LOTE'] = wis['LOTE'].astype(str)
 wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']] = wis[['PROGRAMACAO','CUB_PROGRAMADA','PEDIDOS','SEPARADO','CUB_SEPARADA','CONFERIDO','CUB_CONFERIDA','PENDENTE_SEP','CUB_PENDENTE_SEP','PENDENTE_CONF','CUB_PENDENTE_CONF']].apply(lambda x: x.str.replace(',','.')).astype(float)
 
 join_dados = pd.merge(wis,dados_grade,how="inner", on="LOTE")
-
-priorizacao = BASE_STREAMLIT.worksheet('PRIORIZAÇÃO')
-priorizacao = priorizacao.get_values('a1:ac')
-priorizacao = pd.DataFrame(priorizacao[1:], columns=priorizacao[0]) 
-priorizacao = pd.pivot_table(priorizacao,'VARIAVEL', ['DT_CARREGAMENTO_PCP','DOCAS'],['DS_APLICACAO','PRIORIZADO'], 'nunique')
   
 def definir_status(row):
     if (row['PROGRAMACAO'] - row['CONFERIDO'] <= 0) or (row['CD_SITUACAO'] in ['60.0', '68.0']):
@@ -354,10 +349,3 @@ fig.suptitle(f'Acompanhamento hora a hora {data}')
 col2.pyplot(fig)
 
 
-ba = join_dados.groupby(['DTPROGRAMACAO','HROFERECIMENTO','DTOFERECIMENTO','LOTE']).agg({'PROGRAMACAO':'sum', 'CUB_PROGRAMADA': 'sum', 'SEPARADO':'sum','CUB_SEPARADA':'sum'}).reset_index()
-ba = ba.loc[ba['DTPROGRAMACAO'].isin(pendente)]
-ba['Pendente'] = ba['PROGRAMACAO'] - ba['SEPARADO'] 
-ba = ba.loc[ba['Pendente'] > 0]
-
-st.dataframe(ba)
-st.dataframe(priorizacao)
