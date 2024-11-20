@@ -248,7 +248,7 @@ if h <= 6:
 else:
     hoje = datetime.now()
 data_hoje = hoje.strftime('%Y-%m-%d')
-
+st.dataframe(join_turno)
 join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
 
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
