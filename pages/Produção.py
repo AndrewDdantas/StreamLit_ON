@@ -253,8 +253,6 @@ join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
 som['HORA'] = som['HORA'].astype(int)
 som = som.sort_values('HORA')
-st.write(data_hoje)
-
 soma_m = join_turno.groupby(['TURNO_x','DT_COMPETENCIA','STATUS','sort']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index().sort_values('sort')
 soma_m = soma_m[['TURNO_x','DT_COMPETENCIA','STATUS','QT_SEPARADO','CUBAGEM']]
 
