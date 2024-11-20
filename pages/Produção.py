@@ -244,18 +244,16 @@ join_turno['sort'] = np.select(condicao,opcap2)
 hoje = datetime.now() - timedelta(hours=3)
 h = int(hoje.strftime('%H'))
 if h <= 6:
-    hoje = datetime.now() - timedelta(1)
+    hoje = datetime.now() - timedelta(1, hours=3)
 else:
-    hoje = datetime.now()
+    hoje = datetime.now() - timedelta(hours=3)
 data_hoje = hoje.strftime('%Y-%m-%d')
-st.dataframe(join_turno)
 join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
 
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
 som['HORA'] = som['HORA'].astype(int)
 som = som.sort_values('HORA')
 st.write(data_hoje)
-st.dataframe(som)
 
 soma_m = join_turno.groupby(['TURNO_x','DT_COMPETENCIA','STATUS','sort']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index().sort_values('sort')
 soma_m = soma_m[['TURNO_x','DT_COMPETENCIA','STATUS','QT_SEPARADO','CUBAGEM']]
