@@ -247,7 +247,7 @@ if h <= 6:
     hoje = datetime.now() - timedelta(1)
 else:
     hoje = datetime.now()
-data_hoje = hoje.strftime('%Y-%m-%d')
+data_hoje = hoje.strftime('%Y-%m-%d') + ' 00:00:00'
 st.dataframe(join_turno)
 join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
 
