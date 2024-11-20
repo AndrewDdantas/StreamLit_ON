@@ -247,13 +247,14 @@ if h <= 6:
     hoje = datetime.now() - timedelta(1)
 else:
     hoje = datetime.now()
-data_hoje = hoje.strftime('%Y-%m-%d') + ' 00:00:00'
+data_hoje = hoje.strftime('%Y-%m-%d')
 st.dataframe(join_turno)
 join_turno = join_turno.loc[join_turno['DT_COMPETENCIA'] == data_hoje]
 
 som = join_turno.groupby(['HORA']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index()
 som['HORA'] = som['HORA'].astype(int)
 som = som.sort_values('HORA')
+st.write(data_hoje)
 st.dataframe(som)
 
 soma_m = join_turno.groupby(['TURNO_x','DT_COMPETENCIA','STATUS','sort']).agg({'QT_SEPARADO': 'sum', 'CUBAGEM': 'sum'}).reset_index().sort_values('sort')
