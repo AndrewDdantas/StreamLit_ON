@@ -66,7 +66,31 @@ def get_data_transport():
 stats, df = get_data_transport()
 
 if stats == 200:
-    st.table(df) 
+    STATUS_PALETA = {
+        "Aguardando Inicio Produção": "#FFA500",  # Laranja
+        "Em Separação": "#FFB347",
+        "Conferindo": "#FFD700",  # Amarelo ouro
+        "Embalagem": "#ADFF2F",  # Verde claro
+        "Separação Concl./ Aguard. Carreg.": "#32CD32",  # Verde médio
+        "Em carregamento": "#228B22",  # Verde floresta
+        "Carreg. Finalizado": "#006400"  # Verde escuro
+    }
+    
+    # Função para estilizar uma coluna de status
+    def style_status(status):
+        """
+        Retorna o estilo CSS baseado no status.
+        """
+        color = STATUS_PALETA.get(status, "#FFFFFF")  # Branco como padrão
+        return f"background-color: {color}; color: white;"
+
+    df = pd.DataFrame(data)
+    
+    # Aplicar estilos à coluna "Status"
+    styled_df = df.style.applymap(style_status, subset=["Status"])
+    
+    # Mostrar no Streamlit
+    st.dataframe(styled_df)
 else: 
     st.write(df)
 
