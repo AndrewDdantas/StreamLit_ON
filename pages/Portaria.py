@@ -34,61 +34,37 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(
     json, scope)
 client = gs.authorize(credentials)
 
-BASE_STREAMLIT = client.open_by_key(st.secrets['bases']) 
-portaria_controle = BASE_STREAMLIT.worksheet('PORTARIA CONTROLE')
+GRADE = client.open_by_key(st.secrets['grade']) 
 
-portaria_controle.columns = ['DTPROGRAMACAO','IDCARGA','ROTA_MASTER','STATUS PRODUÇÃO','DOCA','OFERECIMENTO','STATUS MOTORISTA','Observação']
-window_size = 15
-st.title('Acompanhamento Cargas')
-hora_cont = st.empty()
-container = st.empty()
+def get_data_transport():
+    try:
+        grade = GRADE.worksheet('Dados_consolidado')
+        dados_grade = grade.get_values('b2:j')
+        dados_grade = pd.DataFrame(dados_grade[1:], columns=dados_grade[0])
+        dados_grade['num_status'] = dados_grade['STATUS'].str[0]
+        dados_grade = dados_grade.loc[(dados_grade['LOTE'] != '') & (dados_grade['num_status'].isin(['1','2','3','4','5','6']))]
 
-status_colors = {
-    '1 Pendente de Docagem': '#F0F8FF',  # Cor para o status 1
-    '2 Pendente Separação': '#FFFF00',  # Cor para o status 2
-    '3 Pendente Conferencia': '#FFD700',  # Cor para o status 3
-    '4 Aguardando Carregamento': '#FF8C00',
-    '5 Em Carregamento': '#32CD32',
-    '6 Aguardando Liberação': '#008000',
-}
+        de_para_report = GRADE.worksheet('FREQUÊNCIA')
+        de_para_report = de_para_report.get_values('C4:Q')
+        de_para_report = pd.DataFrame(de_para_report[1:], columns=de_para_report[0])
 
-status_colors_font = {
-    '1 Pendente de Docagem': 'red',  # Cor para o status 1
-    '2 Pendente Separação': 'black',  # Cor para o status 2
-    '3 Pendente Conferencia': 'black',  # Cor para o status 3
-    '4 Aguardando Carregamento': 'white',
-    '5 Em Carregamento': 'white',
-    '6 Aguardando Liberação': 'white',
-}
+        data_join = pd.merge(dados_grade, de_para_report, how='left', left_on='FILIAL', right_on='Cód.')
+        data_join = data_join.groupby(['DATA PROG.', 'ID / CARGA']).agg({'DATA OFEREC.':'first', 'Oferec. Carregamento':'first' ,'Master Report':'first', 'Puxada':'first', 'STATUS':'min'})
+        data_join['SORT'] = pd.to_datetime(data_join['DATA OFEREC.'].astype(str) + ' ' + data_join['Oferec. Carregamento'].astype(str), format='%d/%m/%Y %H:%M')
+        data_join['Limite Saída'] = (data_join['SORT'] + timedelta(hours=4)).dt.strftime('%d/%m/%Y %H:%M')
+        data_join = data_join.sort_values('SORT').drop('SORT', axis=1).reset_index()
 
-def rolar_dataframe(window_size):
-
-    df = pd.DataFrame(portaria_controle.get_values('A2:H'))
-    df.columns = ['DTPROGRAMACAO','IDCARGA','ROTA_MASTER','STATUS PRODUÇÃO','DOCA','CARREGAMENTO','STATUS MOTORISTA','OBSERVAÇÃO']
-    df = df[['DTPROGRAMACAO','STATUS PRODUÇÃO','IDCARGA','ROTA_MASTER','DOCA','CARREGAMENTO','STATUS MOTORISTA','OBSERVAÇÃO']]
-    n_rows = len(df)
-    index = 0
-    h_atualizacao = (datetime.now()-timedelta(hours=3)) + timedelta(minutes=5)
-    hora_cont.subheader((datetime.now()-timedelta(hours=3)).strftime('%H:%M'))
-    while True:
-        def apply_status_color(value):
-            return f'background-color: {status_colors.get(value, "black")} ; color: {status_colors_font.get(value, "black")}; font-weight: 900; text-align: center'
-
-        # Aplicar estilos condicionais à coluna 'Status Produção'
-        window = df.iloc[index:index+window_size]
-        styled_df = window.style.map(apply_status_color, subset=['STATUS PRODUÇÃO'])
-        
-        container.table(styled_df)
-
-        index = (index + 1) % n_rows
-
-        sleep(5)
-        if (datetime.now()-timedelta(hours=3)) > h_atualizacao:
-            hora_cont.subheader((datetime.now()-timedelta(hours=3)).strftime('%H:%M'))
-            df = pd.DataFrame(portaria_controle.get_values('A2:H'))
-            df.columns = ['DTPROGRAMACAO','IDCARGA','ROTA_MASTER','STATUS PRODUÇÃO','DOCA','CARREGAMENTO','STATUS MOTORISTA','OBSERVAÇÃO']
-            df = df[['DTPROGRAMACAO','STATUS PRODUÇÃO','IDCARGA','ROTA_MASTER','DOCA','CARREGAMENTO','STATUS MOTORISTA','OBSERVAÇÃO']]
-            h_atualizacao = (datetime.now()-timedelta(hours=3)) + timedelta(minutes=5)
+        data_join = data_join[['DATA PROG.', 'STATUS', 'ID / CARGA', 'Master Report', 'Puxada', 'Limite Saída']]
+        return 200, data_join
 
 
-rolar_dataframe(window_size)
+    except Exception as e:
+        return 500, e
+stats, df = get_data_transport()
+
+if stats == 200:
+    st.write(df) 
+else: 
+    st.write(df)
+
+
