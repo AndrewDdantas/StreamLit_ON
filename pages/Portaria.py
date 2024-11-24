@@ -67,13 +67,13 @@ stats, df = get_data_transport()
 
 if stats == 200:
     STATUS_PALETA = {
-        "Aguardando Inicio Produção": "#FFA500",  # Laranja
-        "Em Separação": "#FFB347",
-        "Conferindo": "#FFD700",  # Amarelo ouro
-        "Embalagem": "#ADFF2F",  # Verde claro
-        "Separação Concl./ Aguard. Carreg.": "#32CD32",  # Verde médio
-        "Em carregamento": "#228B22",  # Verde floresta
-        "Carreg. Finalizado": "#006400"  # Verde escuro
+        "1. Aguardando Inicio Produção": "#FFA500",  # Laranja
+        "2. Em Separação": "#FFB347",
+        "3. Conferindo": "#FFD700",  # Amarelo ouro
+        "4. Embalagem": "#ADFF2F",  # Verde claro
+        "5. Separação Concl./ Aguard. Carreg.": "#32CD32",  # Verde médio
+        "6. Em carregamento": "#228B22",  # Verde floresta
+        "7. Carreg. Finalizado": "#006400"  # Verde escuro
     }
     
     # Função para estilizar uma coluna de status
