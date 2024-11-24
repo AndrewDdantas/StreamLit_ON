@@ -68,11 +68,11 @@ stats, df = get_data_transport()
 if stats == 200:
     STATUS_PALETA = {
         "1. Aguardando Inicio Produção": "#FFA500",  # Laranja
-        "2. Em Separação": "#FFB347",
-        "3. Conferindo": "#FFD700",  # Amarelo ouro
-        "4. Embalagem": "#ADFF2F",  # Verde claro
-        "5. Separação Concl./ Aguard. Carreg.": "#32CD32",  # Verde médio
-        "6. Em carregamento": "#228B22",  # Verde floresta
+        "2. Em Separação": "#ffff00",
+        "3. Conferindo": "#f6b26b",  # Amarelo ouro
+        "4. Embalagem": "#4285f4",  # Verde claro
+        "5. Separação Concl./ Aguard. Carreg.": "#ffc000",  # Verde médio
+        "6. Em carregamento": "#38761d",  # Verde floresta
         "7. Carreg. Finalizado": "#006400"  # Verde escuro
     }
     
@@ -90,7 +90,7 @@ if stats == 200:
     styled_df = df.style.applymap(style_status, subset=["STATUS"])
     
     # Mostrar no Streamlit
-    st.dataframe(styled_df)
+    st.table(styled_df)
 else: 
     st.write(df)
 
