@@ -82,6 +82,8 @@ if stats == 200:
         Retorna o estilo CSS baseado no status.
         """
         color = STATUS_PALETA.get(status, "#FFFFFF")  # Branco como padrão
+        if color == "#ffff00":
+            return f"background-color: {color}; color: black;"
         return f"background-color: {color}; color: white;"
 
     df = pd.DataFrame(df)
