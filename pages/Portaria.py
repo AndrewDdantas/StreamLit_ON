@@ -84,7 +84,7 @@ if stats == 200:
         color = STATUS_PALETA.get(status, "#FFFFFF")  # Branco como padrão
         return f"background-color: {color}; color: white;"
 
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(df)
     
     # Aplicar estilos à coluna "Status"
     styled_df = df.style.applymap(style_status, subset=["STATUS"])
