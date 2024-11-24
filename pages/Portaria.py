@@ -63,7 +63,7 @@ def get_data_transport():
 stats, df = get_data_transport()
 
 if stats == 200:
-    st.write(df) 
+    st.table(df) 
 else: 
     st.write(df)
 
