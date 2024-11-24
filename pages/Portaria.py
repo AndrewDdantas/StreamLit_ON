@@ -36,6 +36,8 @@ client = gs.authorize(credentials)
 
 GRADE = client.open_by_key(st.secrets['grade']) 
 
+st.title('Visão Status Carregamento')
+
 def get_data_transport():
     try:
         grade = GRADE.worksheet('Dados_consolidado')
