@@ -53,6 +53,7 @@ def get_data_transport():
         data_join = pd.merge(dados_grade, de_para_report, how='left', left_on='FILIAL', right_on='Cód.')
         data_join = data_join.groupby(['DATA PROG.', 'ID / CARGA']).agg({'DATA OFEREC.':'first', 'Oferec. Carregamento':'first' ,'Master Report':'first', 'Puxada':'first', 'STATUS':'min'})
         data_join['SORT'] = pd.to_datetime(data_join['DATA OFEREC.'].astype(str) + ' ' + data_join['Oferec. Carregamento'].astype(str), format='%d/%m/%Y %H:%M')
+        data_join = data_join.loc[data_join['SORT'] >= (datetime.now() - timedelta(days=3))]
         data_join['Limite Saída'] = (data_join['SORT'] + timedelta(hours=4)).dt.strftime('%d/%m/%Y %H:%M')
         data_join = data_join.sort_values('SORT').drop('SORT', axis=1).reset_index()
 
