@@ -87,7 +87,7 @@ if stats == 200:
     df = pd.DataFrame(data)
     
     # Aplicar estilos à coluna "Status"
-    styled_df = df.style.applymap(style_status, subset=["Status"])
+    styled_df = df.style.applymap(style_status, subset=["STATUS"])
     
     # Mostrar no Streamlit
     st.dataframe(styled_df)
