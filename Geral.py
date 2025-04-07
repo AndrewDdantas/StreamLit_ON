@@ -100,7 +100,7 @@ modais_processo = modais_processo.applymap(fmt_num, tipo='CUBAGEM', casas=1).res
 modais_processo.columns = ['Modal Master','Peças', 'Carteira', 'Processo', 'Cubagem']
 
 carteira_dias = df_filter['CUBTOTAL'].sum()
-val = {'Tipo':['Carteira Atual', 'Capacidade', 'Dias Em Carteira'], 'Valores':[fmt_num(carteira_dias, tipo='CUBAGEM'), '1.000', fmt_num(carteira_dias/1000, tipo='CUBAGEM', casas=2)]}
+val = {'Tipo':['Carteira Atual', 'Capacidade', 'Dias Em Carteira'], 'Valores':[fmt_num(carteira_dias, tipo='CUBAGEM'), '800', fmt_num(carteira_dias/800, tipo='CUBAGEM', casas=2)]}
 carteira_dias = pd.DataFrame(val)
 
 df_filter['QTCOMP'] = df_filter['QTCOMP'].astype(float) 
