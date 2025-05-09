@@ -1,0 +1,237 @@
+.box_large {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Permite o envolvimento de itens */
+  width: 100%;
+}
+
+.info-box1,
+.info-box2,
+.info-box3,
+.info-box4 {
+  border: 2px solid #333;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  width: 40%; /* Ajuste a largura aqui */
+  text-align: center;
+  flex: 0 0 40%; /* Garante que cada caixa não exceda 40% do contêiner */
+}
+
+/* Estilos específicos para cada info-box */
+.info-box1 {
+  background-color: #03b9b9;
+}
+.info-box2 {
+  background-color: #00c10a;
+}
+.info-box3 {
+  background-color: #ff9900;
+}
+.info-box4 {
+  background-color: #ff0000;
+}
+
+.info-box1 h2,
+.info-box2 h2,
+.info-box3 h2,
+.info-box4 h2 {
+  color: #ffffff;
+  margin-top: 0;
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.info-box1 p,
+.info-box2 p,
+.info-box3 p,
+.info-box4 p {
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.info-table,
+.Table2 td {
+  width: 100%;
+}
+
+.info-table th,
+.Table2 th {
+  color: white;
+  font-size: medium;
+  background-color: #03b9b9;
+  text-align: center;
+  border: none;
+}
+
+/* Estilos para colunas específicas */
+.info-table th:nth-of-type(1) {
+  background-color: #03b9b9; /* Cor para 'A Vencer' */
+  text-align: center;
+  border: none;
+}
+
+.info-table th:nth-of-type(2) {
+  background-color: #00c10a; /* Cor para 'Vence Hoje' */
+  text-align: center;
+}
+
+.info-table th:nth-of-type(3) {
+  background-color: #ff9900; /* Cor para 'Vencido' */
+  text-align: center;
+}
+
+.info-table th:nth-of-type(4) {
+  background-color: #ff0000; /* Cor para 'Vencido' */
+  text-align: center;
+}
+
+.info-table th:nth-of-type(5) {
+  background-color: #03b9b9; /* Cor para 'Vencido' */
+  text-align: center;
+  border: none;
+}
+
+.info-table td,
+.Table2 td {
+  text-align: center;
+  color: black;
+  background-color: white;
+  font-size: medium;
+  font-weight: bold;
+  border: 1px solid #777777;
+}
+
+.box_large_calc {
+  display: flex;
+  flex-direction: column; /* Altera a direção do layout para vertical */
+  justify-content: center;
+  align-items: left;
+  width: 100%;
+  height: 100%;
+}
+
+.box {
+  border: 2px solid #333;
+  padding: 10px;
+  margin: 10px;
+  background-color: #03b9b9;
+  border-radius: 10px;
+  width: 260px;
+  text-align: center;
+  font-size: 30px;
+  height: 200px;
+}
+
+.box p,
+h2 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.cont {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
+.termometro {
+  width: 90%;
+  height: 150px;
+  background-color: #00c10a;
+  border-right: #333;
+  border-width: 5px;
+  border-radius: 20px;
+  position: relative;
+  margin: 20px;
+}
+
+.mercurio {
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 0;
+}
+
+.tex {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
+.Cab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%; /* Usa 100% da largura da viewport */
+  margin: 0 auto; /* Adiciona margem automática nas laterais para centralizar */
+}
+
+.Cab h2 {
+  margin: 0 10px; /* Adiciona espaço entre os elementos h2 */
+}
+
+/* Estilos para as tabelas .cub_con e .pec_con */
+.cub_con,
+.pec_con {
+  width: 90%;
+  margin: 0 auto; /* Centraliza a tabela */
+  text-align: center; /* Alinha o texto ao centro */
+  border-collapse: collapse; /* Para remover espaços entre as células */
+}
+
+.cub_con th,
+.pec_con th {
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+.cub_con td,
+.pec_con td {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.cub_con th,
+.pec_con th {
+  padding: 8px;
+}
+
+.cub_con td,
+.pec_con td {
+  padding: 8px; /* Espaçamento interno para as células */
+}
+
+.itens p {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 4px;
+  top: 1px;
+}
+
+.imag_con {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%; /* Usa 100% da largura da viewport */
+  margin: 10px; /* Adiciona margem automática nas laterais para centralizar */
+}
+
+.imag_box {
+  border-radius: 20px;
+  background-color: white;
+}
+
+.echarts_cub0-container {
+  border-radius: 15px;
+  background-color: white;
+}
