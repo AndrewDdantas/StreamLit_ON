@@ -18,39 +18,6 @@ def get_google_sheets_client(credentials_path):
     creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_path, scope)
     return gspread.authorize(creds)
 
-async def get_data_magalean():
-    try:
-        client = get_google_sheets_client('credentials.json')
-        magalean_automatico = client.open_by_key('1cGS2ODt2vsyPwF3UBa_geSH0Jp8Mb1XGcbRpKfw3NYg').worksheet('1.Registro do Magalean')
-        sheet_magalean = client.open_by_key('1bbnKFSaz6dYwW8KQsxhaocLlUx9_N9g_yMaCf9HUt4Q')
-        sheet_yellow = client.open_by_key('13l2btUKJ93DLqYjWh1Oe3xbFucm5g_lZr4IQUd9i8B4')
-
-        base_magalean = sheet_magalean.worksheet('Respostas ao formulário 1')
-        check_magalean = sheet_magalean.worksheet('Check yellow')
-        check_yellow_base = sheet_yellow.worksheet('Check certificação')
-        
-        ranges = [['a2:i', 'a5411'], ['k2:l', 'k5411'], ['m2:u', 'n5411']]
-        
-        for i in ranges:
-            data = magalean_automatico.get_values(i[0])
-            base_magalean.batch_update([{
-                'range': i[1],
-                'values': data
-            }], value_input_option='USER_ENTERED') 
-            
-        sheet_yellow.worksheet('Magalean').batch_update([{
-            'range': 'a2',
-            'values': check_magalean.get_values('a2:j') }], value_input_option='USER_ENTERED') 
-        
-        check_magalean.batch_update([{
-            'range': 'a2',
-            'values': check_yellow_base.get_values('a2:e')}], value_input_option='USER_ENTERED')
-
-
-        print('Dados Atualizados Kaizen Luiza')
-    except Exception as e:
-        print(e)
-
 # Configuração da conexão com o banco de dados
 connection_string_wis = """
 DSN=WIS;
@@ -902,18 +869,8 @@ async def main():
     while True:
         try:
             await asyncio.gather(
-                update_pendencia_5350(),
-                get_portaria(),
-                update_pendencia_590(),
-                update_status_operacao(),
-                update_producao_turno(),
                 update_grade(),
-                update_agendas_pendentes()
             )
-            if datetime.now() >= date_max:
-                await get_data_magalean() 
-                date_max = datetime.now() + timedelta(minutes=30)
-
             print("Dados atualizados com sucesso!")
         except Exception as e:
             print(f"Erro durante a atualização: {e}")
